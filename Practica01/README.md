@@ -65,10 +65,10 @@ Practica01*> suma (Uno (Cero (Uno U))) (Cero (Uno U))
 
 b) El antecesor de un número binario.
 
-       <pre><code>
-       Practica01*> antecesor (Uno (Cero (Uno (Cero (Uno U)))))
-       110100
-       </code></pre>
+<pre><code>
+Practica01*> antecesor (Uno (Cero (Uno (Cero (Uno U)))))
+110100
+</code></pre>
 
 ### 7. (1.5 puntos)
 Dada la gramática para las operaciones aritméticas, implementa la instancia de la clase
