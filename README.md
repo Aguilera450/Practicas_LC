@@ -1,4 +1,4 @@
 # InvadirPolonia
 ## Integrantes del equipo:
 * Adrián Aguilera Moreno.
-* Marco ...
+* Marco Silva Huerta.
