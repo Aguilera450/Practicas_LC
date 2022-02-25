@@ -58,10 +58,10 @@ funciones:
 &nbsp;
 a) La suma de dos números binarios.
 
-       <pre><code>
-       Practica01*> suma (Uno (Cero (Uno U))) (Cero (Uno U))
-       10011
-       </code></pre>
+<pre><code>
+Practica01*> suma (Uno (Cero (Uno U))) (Cero (Uno U))
+10011
+</code></pre>
 
 b) El antecesor de un número binario.
 
