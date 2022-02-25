@@ -48,6 +48,7 @@ Practica1*> elimina [3,6,2,6,8,9] 4
 
 6. (3 punto) Recordando la definición de los números binarios vista en clase,
 define las siguientes funciones:
+
        a) La suma de dos números binarios.
        <pre><code>
        Practica01*> suma (Uno (Cero (Uno U))) (Cero (Uno U))
