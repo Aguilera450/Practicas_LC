@@ -50,14 +50,18 @@ Practica1*> elimina [3,6,2,6,8,9] 4
 define las siguientes funciones:
 
        a) La suma de dos números binarios.
+
        <pre><code>
        Practica01*> suma (Uno (Cero (Uno U))) (Cero (Uno U))
        10011
        </code></pre>
+
        b) El antecesor de un número binario.
+
        <pre><code>
        Practica01*> antecesor (Uno (Cero (Uno (Cero (Uno U)))))
        110100
        </code></pre>
+
 7. (1.5 puntos) Dada la gramática para las operaciones aritméticas, implementa
 la instancia de la clase Show para poder visualizarla como solemos ocuparlos.
