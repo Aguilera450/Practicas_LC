@@ -73,3 +73,9 @@ Practica01*> antecesor (Uno (Cero (Uno (Cero (Uno U)))))
 ### 7. (1.5 puntos)
 Dada la gramática para las operaciones aritméticas, implementa la instancia de la clase
 Show para poder visualizarla como solemos ocuparlos.
+
+## Bibliografía (Consultas):
+* [Haskell.](https://www.haskell.org/)
+* [Recursión.](http://aprendehaskell.es/content/Recursion.html)
+* [La sintaxis de las funciones](http://aprendehaskell.es/content/Funciones.html)
+* [Creando nuestros propios tipos y clases de tipos.](http://aprendehaskell.es/content/ClasesDeTipos.html)
