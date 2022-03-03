@@ -13,9 +13,13 @@ anagrama s1 s2 = error "Sin implementar."
 
 --2. segmento. Función que devuelve la parte de la lista 
 --             comprendida por los índices.
-segmento :: Int -> Int -> [Int]
-segmento n m = error "Sin implementar."
-
+segmento :: Int -> Int -> [Int] -> [Int]
+segmento n m (x:xs)
+  | m > length (x:xs) = (x:xs)
+  | n > m             = (x:xs)
+  | n == m            = take 1 (drop (n) (x:xs))
+  | otherwise         = symbol
+  where symbol = take (m - n + 1) (drop (n) (x:xs))
 
 --3. prodReps. Función que devuelve el producto del número con más 
 --             repeticiones de una lista.
