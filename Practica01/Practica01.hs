@@ -26,10 +26,16 @@ segmento n m (x:xs)
 prodReps :: [Int] -> Int
 prodReps l = error "Sin implementar."
 
+-- Reversa de una lista, esta función funge de auxiliar a esEspejo (4).
+reversa :: String -> String
+reversa [] = []
+reversa (x:xs) = (reversa xs) ++ [x]
 
 --4. esEspejo. Función que determina si una fecha es espejo.
 esEspejo :: String -> Bool
-esEspejo s = error "Sin implementar."
+esEspejo s = if (reversa s) == s
+  then True
+  else False
 
 
 --5. elimina. Función que elimina de la lista el número del índice.
