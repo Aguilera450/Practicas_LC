@@ -18,7 +18,7 @@ elimina (x:xs) 0 = xs
 elimina (x:xs) n = x : elimina xs (n - 1)
 
 
-main :: IO ()
-main = do
-  print (anagrama "amor" "romo")
-  print (elimina  [1, 4, 3, 2, 5] 4)
+--main :: IO ()
+--main = do
+--  print (anagrama "amor" "romo")
+--  print (elimina  [1, 4, 3, 2, 5] 4)
