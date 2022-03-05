@@ -6,20 +6,41 @@
 --}
 module Practica1 where
 
---1. anagrama. Función que decide si dos palabras son un anagrama.
+-- 1. Anagrama. Función que decide si dos palabras son un anagrama.
 anagrama :: String -> String -> Bool
-anagrama s1 s2 = error "Sin implementar."
+anagrama s1 s2 = (qsort s1) == (qsort s2)
 
+-- Función auxiliar QuickSort para ordenar las palabras y verifiar si son iguales.
+qsort :: (Ord a) => [a] -> [a]
+qsort [] = []
+qsort (x : xs) =
+  qsort [a | a <- xs, a < x]
+    ++ [x]
+    ++ qsort [b | b <- xs, b >= x]
+
+-- Función auxiliar a segmento.
+-- Obtiene una sublista hasta el índice indicado.
+subcadenaInd :: Int -> [Int] -> [Int]
+subcadenaInd n (x:xs)
+  | n < 0         = []
+subcadenaInd n [] = []
+subcadenaInd n (x:xs) = x : subcadenaInd (n - 1) xs
+
+-- Función auxiliar a segmento.
+-- Elimina la sublista hasta el índice indicado.
+eliminaHasta :: Int -> [Int] -> [Int]
+eliminaHasta n (x:xs)
+  | n <= 0             = (x:xs)
+  | length (x:xs) == 0 = []
+eliminaHasta n (x:xs) = eliminaHasta (n - 1) xs
 
 --2. segmento. Función que devuelve la parte de la lista 
 --             comprendida por los índices.
 segmento :: Int -> Int -> [Int] -> [Int]
-segmento n m (x:xs)
-  | m > length (x:xs) = (x:xs)
-  | n > m             = (x:xs)
-  | n == m            = take 1 (drop (n) (x:xs))
-  | otherwise         = symbol
-  where symbol = take (m - n + 1) (drop (n) (x:xs))
+segmento n m list
+  | n < 0 || m < 0  = list
+  | n > m           = list
+segmento n m list   = eliminaHasta n (subcadenaInd m list)
 
 --3. prodReps. Función que devuelve el producto del número con más 
 --             repeticiones de una lista.
@@ -37,11 +58,11 @@ esEspejo s = if (reversa s) == s
   then True
   else False
 
-
---5. elimina. Función que elimina de la lista el número del índice.
+-- 5. Elimina. Función que elimina de la lista el número del índice.
 elimina :: [Int] -> Int -> [Int]
-elimina l n = error "Sin implementar."
-
+elimina [] n = []
+elimina (x:xs) 0 = xs
+elimina (x:xs) n = x : elimina xs (n - 1)
 
 --6. Binario. Tipo de dato para representación de binario.
 data Binario = U | Cero Binario | Uno Binario
