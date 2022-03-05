@@ -83,8 +83,19 @@ suma (Cero b1) (Cero b2) = (Cero (suma b1 b2))
 suma (Uno b1) (Uno b2) = (Cero (suma U (suma b1 b2)))
 -- suma b1 b2 = error "Sin implementar."
 
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTA FUNCIÓN DE MOMENTO TIENE ERRORES.
+-- Función auxiliar a la función antecesor.
+-- Función que encuentra el complemento a2 del binario.
+complementoA2 :: Binario -> Binario
+complementoA2 U = U
+complementoA2 (Uno U) = U
+complementoA2 (Cero U) = (Cero U)
+complementoA2 (Uno b) = (complementoA2 b)
+complementoA2 (Cero b) = (Uno (complementoA2 b))
+
 --b. antecesor. Función que obtiene el antencesor de un binario.
-antecesor b = error "Sin implementar."
+antecesor :: Binario -> Binario
+antecesor b = complementoA2 (suma (complementoA2 b) U)
 
 --OA. Tipo de dato para las operaciones aritméticas binarias. 
 data OA = No | Suma OA OA | Resta OA OA | Producto OA OA 
