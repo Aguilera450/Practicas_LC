@@ -2,7 +2,7 @@
 -- Equipo: InvadirPolonia.
 -- Integrantes:
 -- *) Marco Silva Huerta.
--- *) Adrián Aguilera Moreno.
+-- *) Adrián Aguilera Moreno: 421005200.
 --}
 module Practica1 where
 
