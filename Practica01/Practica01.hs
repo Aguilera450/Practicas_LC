@@ -98,10 +98,14 @@ antecesor :: Binario -> Binario
 antecesor b = complementoA2 (suma (complementoA2 b) U)
 
 --OA. Tipo de dato para las operaciones aritméticas binarias. 
-data OA = No | Suma OA OA | Resta OA OA | Producto OA OA 
+data OA = No String | Suma OA OA | Resta OA OA | Producto OA OA 
             | Division OA OA | Modulo OA OA
 
-type No = String          
-
---7. Definición de la instancia de la clase Show para mostrar las OA.            
---instance Show OA where
+--7. Definición de la instancia de la clase Show para mostrar las OA.
+instance Show OA where
+  show (No n) = n
+  show (Suma n m)     = "(" ++ (show n) ++ " + " ++ (show m) ++ ")"
+  show (Resta n m)    = "(" ++ (show n) ++ " - " ++ (show m) ++ ")"
+  show (Modulo n m)   = "(" ++ (show n) ++ " % " ++ (show m) ++ ")"
+  show (Division n m) = "(" ++ (show n) ++ " / " ++ (show m) ++ ")"
+  show (Producto n m) = "(" ++ (show n) ++ " * " ++ (show m) ++ ")"
