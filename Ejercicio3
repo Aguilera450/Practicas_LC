@@ -1,0 +1,35 @@
+import Data.List (sort, sortBy)
+import Data.Ord (comparing)
+
+
+-- Recibe la lista del pdf. y oredena en tuplas de acuerdo 
+-- a la cantidad de veces que aparece el numero
+tuplas :: [Int] -> [[Int]]
+tuplas [] = []
+tuplas (x:xs) = let a = takeWhile (==x) xs
+                    b = dropWhile (==x) xs
+               in (x : a) : tuplas b
+-- Recie la tupla y la ordena de modo que la más 
+-- larga queda al final, es decir el número que más se 
+-- repitio su lista queda al fial. 
+lsort :: [[a]] -> [[a]]
+lsort = sortBy (comparing length)
+
+-- Aquí obtenemos la lista final de la tupla
+-- es decir la lista del número que más se a repetido.
+getLast :: [[a]] -> [a]
+getLast [lst] = lst
+getLast (_:xs) = getLast xs
+
+-- Finalmente multiplicamos esa lista.
+multiplicaElementos :: [Int] -> Int
+multiplicaElementos (x:xs)
+   | length (x:xs) == 1 = x * 1
+   | otherwise = x * multiplicaElementos xs
+   
+main :: IO ()
+main = do
+  print (tuplas [2,3,3,3,4,5,52,75]) -- Primero oredenar por TUPLAS
+  print (lsort [[2],[3,3,3],[4,4],[5],[52],[75]]) -- Despues ordenar   
+  print (getLast [[2],[5],[52],[75],[4,4],[3,3,3]]) -- Obtener el utimo
+  print (multiplicaElementos [3,3,3]) -- Multiplicarlos
