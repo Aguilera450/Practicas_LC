@@ -90,8 +90,8 @@ complementoA2 :: Binario -> Binario
 complementoA2 U = U
 complementoA2 (Uno U) = U
 complementoA2 (Cero U) = (Cero U)
-complementoA2 (Uno b) = (complementoA2 b)
-complementoA2 (Cero b) = (Uno (complementoA2 b))
+complementoA2 (Uno b) = suma (Cero (complementoA2 b)) U
+complementoA2 (Cero b) = suma (Uno (complementoA2 b)) U
 
 --b. antecesor. Función que obtiene el antencesor de un binario.
 antecesor :: Binario -> Binario
