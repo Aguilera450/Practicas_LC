@@ -79,11 +79,11 @@ suma U (Cero b) = (Uno b)
 suma (Cero b) U = (Uno b)
 suma (Uno b) U = (Cero (suma U b))
 suma U (Uno b) = (Cero (suma U b))
+suma (Uno b1) (Cero b2) = (Uno (suma b1 b2))
+suma (Cero b1) (Uno b2) = (Uno (suma b1 b2))
 suma (Cero b1) (Cero b2) = (Cero (suma b1 b2))
 suma (Uno b1) (Uno b2) = (Cero (suma U (suma b1 b2)))
--- suma b1 b2 = error "Sin implementar."
 
--- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTA FUNCIÓN DE MOMENTO TIENE ERRORES.
 -- Función auxiliar a la función antecesor.
 -- Función que encuentra el complemento a2 del binario.
 complementoA2 :: Binario -> Binario
