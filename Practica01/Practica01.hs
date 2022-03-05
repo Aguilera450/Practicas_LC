@@ -70,11 +70,18 @@ data Binario = U | Cero Binario | Uno Binario
 instance Show Binario where
     show U = "1"
     show (Cero b) = show b ++ "0" 
-    show (Uno b) = show b ++ "1"
+    show (Uno b)  = show b ++ "1"
 
 --a. suma. Función que obtiene el resultado de la suma de dos binarios.
 suma :: Binario -> Binario -> Binario
-suma b1 b2 = error "Sin implementar."
+suma U U = (Cero U)
+suma U (Cero b) = (Uno b)
+suma (Cero b) U = (Uno b)
+suma (Uno b) U = (Cero (suma U b))
+suma U (Uno b) = (Cero (suma U b))
+suma (Cero b1) (Cero b2) = (Cero (suma b1 b2))
+suma (Uno b1) (Uno b2) = (Cero (suma U (suma b1 b2)))
+-- suma b1 b2 = error "Sin implementar."
 
 --b. antecesor. Función que obtiene el antencesor de un binario.
 antecesor b = error "Sin implementar."
