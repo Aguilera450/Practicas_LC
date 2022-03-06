@@ -68,7 +68,7 @@
 \begin{enumerate}
   
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 1
-\item \textbf{Anagrama:}
+\item \textbf{Anagrama:} Resolvemos ordenando ambas cadenas con \textbf{qsort} y comparando para verificar si tenemos las mismas palabras
   
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 2
 \item \textbf{Segmento:} Para la función \code{segmento} se emplean dos funciones
@@ -81,6 +81,21 @@
   \end{itemize}
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 3
 \item \textbf{Multiplica la moda:}
+
+La forma de resolver fue en cinco pasos:
+\begin{enumerate}
+    \item Ordenar la lista
+    \item Hacer que la lista sean tuplas
+    \item Ordenar la tupla
+    \item Obtener la lista ultima de la tupla 
+    \item Multiplicar los números de la lista
+\end{enumerate}
+
+\textbf{tsort:} Usamos sortBy para sobreescribir la forma de ordenar con (comparing length), es decir la función tsort nos deja sobrescribir la forma en que se va a ordenar haciendo las coparaciones correspondientes a la longitud de cada una de las listas. Comparando la longitud para hacer el ordenamiento. 
+
+\textbf{tuplas:} usamos takeWhile y dropWhile para hacer las busquedas
+ de los números que fueran comparando y cumpliendo la igualdad, rompiendo 
+ con los que no de modo que se separarán las listas con los valores iguales. 
   
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 4
 \item \textbf{Fechas espejo:} Esta función utiliza la función reversa\footnote{Esta
@@ -88,7 +103,9 @@ función se define en \code{Practica01} y es, de hecho, la función vista en cla
   de una lista como función auxiliar.
   
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 5
-\item \textbf{Elimina por índice:}
+\item \textbf{Elimina por índice:} Recibimos una lista un número (índice) que buscamos eliminar. Caso base, lista vacía e índice 0. Finalmente hacemos recursión sobre la lista restando al número 1 por iniciar con 0. 
+  
+  
   
   %%%%%%%%%%%%%%%%%%%%%%%%%% Ejercicio 6
 \item \textbf{Suma binarios y antecesor del binario:} Para esta función, en el
@@ -109,7 +126,7 @@ función se define en \code{Practica01} y es, de hecho, la función vista en cla
       [t]{0.867\textwidth}
       Matriculas:
       \begin{itemize}
-      \item[1.] Marco Silva Huerta: ..........
+      \item[1.] Marco Silva Huerta: 316205326
       \item[2.] Adrian Aguilera Moreno: 421005200.
       \end{itemize}
   \end{minipage}}
