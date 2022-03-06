@@ -5,6 +5,15 @@ Este es el ejercio 3
 import Data.List(sortBy)
 import Data.Ord(comparing)
 
+
+qsort :: (Ord a) => [a] -> [a]
+qsort [] = []
+qsort (x : xs) =
+  qsort [a | a <- xs, a < x]
+    ++ [x]
+    ++ qsort [b | b <- xs, b >= x]
+
+
 -- Función principal
 -- Recibe una lista 
 -- Devuelve un entero
