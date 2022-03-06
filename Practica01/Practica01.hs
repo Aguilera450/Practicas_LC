@@ -42,6 +42,7 @@ segmento n m list
   | n > m           = list
 segmento n m list   = eliminaHasta n (subcadenaInd m list)
 
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AQUÍ VA EL 03
 --3. prodReps. Función que devuelve el producto del número con más 
 --             repeticiones de una lista.
 prodReps :: [Int] -> Int
