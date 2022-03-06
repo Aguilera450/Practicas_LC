@@ -1,6 +1,14 @@
+module Ejercicio3 where
 import Data.List (sort, sortBy)
 import Data.Ord (comparing)
 
+-- Función auxiliar QuickSort para ordenar las palabras y verifiar si son iguales.
+qsort :: (Ord a) => [a] -> [a]
+qsort [] = []
+qsort (x : xs) =
+  qsort [a | a <- xs, a < x]
+    ++ [x]
+    ++ qsort [b | b <- xs, b >= x]
 
 -- Recibe la lista del pdf. y oredena en tuplas de acuerdo 
 -- a la cantidad de veces que aparece el numero
@@ -27,9 +35,12 @@ multiplicaElementos (x:xs)
    | length (x:xs) == 1 = x * 1
    | otherwise = x * multiplicaElementos xs
    
+
+{--
 main :: IO ()
 main = do
   print (tuplas [2,3,3,3,4,5,52,75]) -- Primero oredenar por TUPLAS
   print (lsort [[2],[3,3,3],[4,4],[5],[52],[75]]) -- Despues ordenar   
   print (getLast [[2],[5],[52],[75],[4,4],[3,3,3]]) -- Obtener el utimo
   print (multiplicaElementos [3,3,3]) -- Multiplicarlos
+--}

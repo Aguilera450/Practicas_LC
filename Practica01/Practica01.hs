@@ -1,10 +1,13 @@
 {--
 -- Equipo: InvadirPolonia.
 -- Integrantes:
--- *) Marco Silva Huerta.
+-- *) Marco Silva Huerta: 316205326.
 -- *) Adrián Aguilera Moreno: 421005200.
 --}
 module Practica1 where
+
+import Data.List(sortBy)
+import Data.Ord(comparing)
 
 -- 1. Anagrama. Función que decide si dos palabras son un anagrama.
 anagrama :: String -> String -> Bool
@@ -42,11 +45,44 @@ segmento n m list
   | n > m           = list
 segmento n m list   = eliminaHasta n (subcadenaInd m list)
 
--- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AQUÍ VA EL 03
+-- 2da función auxiliar
+-- Recibe la lista ordenada de qsort(1ra función)
+-- Devuelve una lista de listas de la cantidad
+--  de veces que se repite el número
+tuplas :: [Int] -> [[Int]]
+tuplas [] = []
+tuplas (x:xs) = let a = takeWhile (==x) xs  
+                    b = dropWhile (==x) xs
+                 in (x : a) : tuplas b
+
+-- 3ra función auxiliar
+-- Recie una tupla y la ordena de modo que la lista más
+--  larga queda al final, es decir de número que más se 
+--  repitio su lista queda al fial.
+-- Devuelve una tupla ordenada
+tsort :: [[a]] -> [[a]]
+tsort = sortBy (comparing length)
+
+-- 4ta función auxiliar
+-- Recibe una tupla ordenada
+-- Devuelve la ultima lista de la tupla
+getUltimo :: [[a]] -> [a]
+getUltimo [x] = x
+getUltimo (_:xs) = getUltimo xs
+
+-- 5ta función auxiliar
+-- Recibe una lista 
+-- Devuelve la multiplicación de los elementos 
+--  de la lista
+multiplicaElementos :: [Int] -> Int
+multiplicaElementos (x:xs)
+   | length (x:xs) == 1 = x * 1
+   | otherwise = x * multiplicaElementos xs
+
 --3. prodReps. Función que devuelve el producto del número con más 
 --             repeticiones de una lista.
 prodReps :: [Int] -> Int
-prodReps l = error "Sin implementar."
+prodReps list = (multiplicaElementos(getUltimo(tsort(tuplas(qsort list)))))
 
 -- Reversa de una lista, esta función funge de auxiliar a esEspejo (4).
 reversa :: String -> String

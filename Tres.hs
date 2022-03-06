@@ -1,6 +1,7 @@
 {--
 Este es el ejercio 3 
 --}
+module Tres where
 
 import Data.List(sortBy)
 import Data.Ord(comparing)
@@ -9,6 +10,15 @@ import Data.Ord(comparing)
 -- Recibe una lista 
 -- Devuelve un entero
 -- Implementa 5 funciones auxiliares
+
+-- Función auxiliar QuickSort para ordenar las palabras y verifiar si son iguales.
+qsort :: (Ord a) => [a] -> [a]
+qsort [] = []
+qsort (x : xs) =
+  qsort [a | a <- xs, a < x]
+    ++ [x]
+    ++ qsort [b | b <- xs, b >= x]
+
 
 prodReps :: [Int] -> Int
 prodReps (x:xs) = (multiplicaElementos(getUltimo(tsort(tuplas(qsort(x:xs))))))
