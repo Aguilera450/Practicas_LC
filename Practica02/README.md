@@ -96,7 +96,7 @@ Practica02*> equiv (POr (PVar "p") (PVar "q")) (PNeg (PNeg (POr (PVar "p") (PVar
 True
 </code></pre>
 
-### 12. (1 punto)
+### 12. (1 punto):
 Define una función que elimine las equivalencias de la proposición dada.
 <pre><code>
 Practica02*> elimEquiv (PEquiv (PVar "p") (PVar "q"))
