@@ -3,8 +3,8 @@
 ### Contexto:
 Se define al tipo de dato Prop para representar los operadores lógicos de la lógica proposicional:
 <pre><code>
-	data Prop = PTrue | PFalse | PVar String | PNeg Prop | POr Prop Prop
-	     	  | PAnd Prop Prop | PImpl Prop Prop | PEquiv Prop Prop
+			data Prop = PTrue | PFalse | PVar String | PNeg Prop | POr Prop Prop
+	     		       | PAnd Prop Prop | PImpl Prop Prop | PEquiv Prop Prop
 </code></pre>
 
 Al Estado como la lista de las variables con valor verdadero dentro de la proposición.
