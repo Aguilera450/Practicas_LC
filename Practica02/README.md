@@ -103,7 +103,7 @@ Practica02*> elimEquiv (PEquiv (PVar "p") (PVar "q"))
 (("p" -> "q") ^ ("q" -> "p"))
 </code></pre>
 
-### 13. (1 punto.):
+### 13. (1 punto):
 Define una función que elimine las implicaciones de la proposición dada.
 <pre><code>
 Practica02*> elimImpl (PImpl (PVar "p") (PVar "q"))
