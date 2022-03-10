@@ -10,7 +10,7 @@ Se define al tipo de dato Prop para representar los operadores l처gicos de la l�
 Al Estado como la lista de las variables con valor verdadero dentro de la proposici처n.
 <pre><code>
 type Estado = [String]
-<\code><\pre>
+</code></pre>
 
 ### 1. (1 punto):
 Define una funci처n que devuelve la interpretaci처n de la proposici처n con el estado dado.
