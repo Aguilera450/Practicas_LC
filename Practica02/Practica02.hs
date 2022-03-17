@@ -16,14 +16,14 @@ type Estado = [String]
 
 --Instancia Show para Prop.
 instance Show Prop where
-  show PTrue = error "Sin implementar" 
-  show PFalse = error "Sin implementar"
-  show (PVar x) = error "Sin implementar" 
-  show (PNeg p) = error "Sin implementar" 
-  show (POr p1 p2) = error "Sin implementar"
-  show (PAnd p1 p2) = error "Sin implementar"
-  show (PImpl p1 p2) = error "Sin implementar"
-  show (PEquiv p1 p2) = error "Sin implementar"
+  show PTrue = "True" 
+  show PFalse = "False"
+  show (PVar x) = x 
+  show (PNeg p) = "~" ++ (show p) 
+  show (POr p1 p2) = "(" ++ (show p1) ++ " ∨ " ++ (show p2) ++ ")"
+  show (PAnd p1 p2) = "(" ++ (show p1) ++ " ∧ " ++ (show p2) ++ ")"
+  show (PImpl p1 p2) = "(" ++ (show p1) ++ " → " ++ (show p2) ++ ")"
+  show (PEquiv p1 p2) = "(" ++ (show p1) ++ " ↔ " ++ (show p2) ++ ")"
 
 
 --1. interp. Función que evalua una proposición dado el estado.
