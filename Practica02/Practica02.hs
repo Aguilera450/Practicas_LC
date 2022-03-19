@@ -39,10 +39,22 @@ interp e (PEquiv x y) = interp e (PAnd (PImpl x y) (PImpl y x))
 estados :: Prop -> [Estado]
 estados error = "No implementado."
 
---3. vars. Función que obtiene la lista de todas las variables de una
---			proposición.
+--3. vars. Función que obtiene la lista de todas las variables de una proposición.
 vars :: Prop -> [String]
-vars p = error "Sin implementar."
+vars (PVar f) = [f]
+vars (PNeg f) = vars f
+vars (PAnd f g) = vars f `union` vars g
+vars (POr f g) = vars f `union` vars g
+vars (PImpl f g) = vars f `union` vars g
+vars (PEquiv f g) = vars f `union` vars g
+
+-- Función auxiliar union 
+-- Esta función recibe dos listas y las concatena 
+--  verificando que no esten repetidos los elementos
+--  recorriendo la lista con notElem devolviendo 
+--  una nueva lista.
+union :: Eq a => [a] -> [a] -> [a]
+union xs ys = xs ++ [y | y <- ys, y `notElem` xs]
 
 --4. subconj. Función que devuelve el conjunto potencia de una lista.
 subconj :: [a] -> [[a]]
@@ -51,7 +63,15 @@ subconj l = error "Sin implementar."
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
-modelos p = error "Sin implementar."
+modelos f  = potenlist(vars f)
+
+-- Función auxiliar para obtener el conjunto potencia de una 
+--   lista. De modo que al recibir la lista de las variables de 
+--   vars esta saca su conjunto potencia.
+potenlist ::  [a] -> [[a]]
+potenlist [] = [[]]
+potenlist (x:xs) = [x:ys | ys <- xss] ++ xss
+       where xss = potenlist xs
 
 --6. tautologia. Función que dice si una proposición es tautología.
 tautologia :: Prop -> Bool
