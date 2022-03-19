@@ -63,7 +63,8 @@ subconj p = (potenlist p)
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
-modelos f  = potenlist(vars f)
+modelos f  = [i | i <- (estados f),
+              interp i f]
 
 -- Función auxiliar para obtener el conjunto potencia de una 
 --   lista. De modo que al recibir la lista de las variables de 
@@ -75,7 +76,7 @@ potenlist (x:xs) = [x:ys | ys <- xss] ++ xss
 
 --6. tautologia. Función que dice si una proposición es tautología.
 tautologia :: Prop -> Bool
-tautologia p = error "Sin implementar."
+tautologia p = (estados p) == (modelos p)
 
 --7. satisfen. Función que resuelve si una proposición es satisfacible
 -- 				con cierto estado.
