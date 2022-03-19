@@ -28,8 +28,8 @@ instance Show Prop where
 
 --1. interp. Función que evalua una proposición dado el estado.
 interp :: Estado -> Prop -> Bool
-interp e p = error "Sin implementar."
-
+--interp e p
+  
 --2. estados. Función que devuelve una lista de todas las combinaciones
 -- 				posibles de los estados de una proposición.
 estados :: Prop -> [Estado]
