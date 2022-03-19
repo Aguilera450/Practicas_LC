@@ -1,5 +1,5 @@
 {--
--- Equipo: InvadirPolonia.
+65;6602;1c-- Equipo: InvadirPolonia.
 -- Integrantes:
 -- *) Marco Silva Huerta: 316205326.
 -- *) Adrián Aguilera Moreno: 421005200.
@@ -19,25 +19,25 @@ instance Show Prop where
   show PTrue = "True" 
   show PFalse = "False"
   show (PVar x) = x 
-  show (PNeg p) = "~" ++ (show p) 
-  show (POr p1 p2) = "(" ++ (show p1) ++ " ∨ " ++ (show p2) ++ ")"
-  show (PAnd p1 p2) = "(" ++ (show p1) ++ " ∧ " ++ (show p2) ++ ")"
-  show (PImpl p1 p2) = "(" ++ (show p1) ++ " → " ++ (show p2) ++ ")"
-  show (PEquiv p1 p2) = "(" ++ (show p1) ++ " ↔ " ++ (show p2) ++ ")"
+  show (PNeg x) = "~" ++ (show x) 
+  show (POr x y) = "(" ++ (show x) ++ " ∨ " ++ (show y) ++ ")"
+  show (PAnd x y) = "(" ++ (show x) ++ " ∧ " ++ (show y) ++ ")"
+  show (PImpl x y) = "(" ++ (show x) ++ " → " ++ (show y) ++ ")"
+  show (PEquiv x y) = "(" ++ (show x) ++ " ↔ " ++ (show y) ++ ")"
 
 
 --1. interp. Función que evalua una proposición dado el estado.
 interp :: Estado -> Prop -> Bool  
-interp e (PVar f) = elem f e
-interp e (POr f g) = interp e f || interp e g
-interp e (PAnd f g) = interp e f && interp e g
-interp e (PImpl f g) = interp e (POr(PNeg f) g )
-interp e (PEquiv f g) = interp e (PAnd (PImpl f g) (PImpl g f))
+interp e (PVar x) = elem x e
+interp e (POr x y) = (interp e x) || (interp e y)
+interp e (PAnd x y) = (interp e x) && (interp e y)
+interp e (PImpl x y) = interp e (POr(PNeg x) y )
+interp e (PEquiv x y) = interp e (PAnd (PImpl x y) (PImpl y x))
 
 --2. estados. Función que devuelve una lista de todas las combinaciones
 -- 				posibles de los estados de una proposición.
 estados :: Prop -> [Estado]
-estados p = error "Sin implementar."
+estados error = "No implementado."
 
 --3. vars. Función que obtiene la lista de todas las variables de una
 --			proposición.
