@@ -37,7 +37,7 @@ interp e (PEquiv x y) = interp e (PAnd (PImpl x y) (PImpl y x))
 --2. estados. Función que devuelve una lista de todas las combinaciones
 -- 				posibles de los estados de una proposición.
 estados :: Prop -> [Estado]
-estados error = "No implementado."
+estados p = potenlist(vars p)
 
 --3. vars. Función que obtiene la lista de todas las variables de una proposición.
 vars :: Prop -> [String]
@@ -58,8 +58,8 @@ union xs ys = xs ++ [y | y <- ys, y `notElem` xs]
 
 --4. subconj. Función que devuelve el conjunto potencia de una lista.
 subconj :: [a] -> [[a]]
-subconj l = error "Sin implementar."
-
+subconj p = (potenlist p)
+  
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
