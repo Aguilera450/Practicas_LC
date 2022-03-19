@@ -63,7 +63,15 @@ subconj l = error "Sin implementar."
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
-modelos p = error "Sin implementar."
+modelos f  = potenlist(vars f)
+
+-- Función auxiliar para obtener el conjunto potencia de una 
+--   lista. De modo que al recibir la lista de las variables de 
+--   vars esta saca su conjunto potencia.
+potenlist ::  [a] -> [[a]]
+potenlist [] = [[]]
+potenlist (x:xs) = [x:ys | ys <- xss] ++ xss
+       where xss = potenlist xs
 
 --6. tautologia. Función que dice si una proposición es tautología.
 tautologia :: Prop -> Bool
