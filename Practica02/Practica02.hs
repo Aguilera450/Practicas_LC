@@ -19,7 +19,7 @@ instance Show Prop where
   show PTrue = "True" 
   show PFalse = "False"
   show (PVar x) = x 
-  show (PNeg x) = "~" ++ (show x) 
+  show (PNeg x) = "¬" ++ (show x) 
   show (POr x y) = "(" ++ (show x) ++ " ∨ " ++ (show y) ++ ")"
   show (PAnd x y) = "(" ++ (show x) ++ " ∧ " ++ (show y) ++ ")"
   show (PImpl x y) = "(" ++ (show x) ++ " → " ++ (show y) ++ ")"
@@ -67,8 +67,8 @@ tautologia p = (estados p) == (modelos p)
 --7. satisfen. Función que resuelve si una proposición es satisfacible
 -- 				con cierto estado.
 satisfen :: Estado -> Prop -> Bool
-satisfen e p = error "Sin implementar."
-
+satisfen e p = interp e p == True
+  
 --8. satisf. Función que resuelve si una proposición es satisfacible.
 satisf :: Prop -> Bool
 satisf p
@@ -90,16 +90,33 @@ equiv p1 p2 = (estados p1) == (estados p2)
 
 --12. elimEquiv. Función que elimina las equivalencias lógicas.
 elimEquiv :: Prop -> Prop
-elimEquiv p = error "Sin implementar."
-
+elimEquiv (PVar x) = (PVar x)
+elimEquiv (PNeg x) = (PNeg (elimEquiv x))
+elimEquiv (POr x y) = (POr (elimEquiv x) (elimEquiv y))
+elimEquiv (PAnd x y) = (PAnd (elimEquiv x) (elimEquiv y))
+elimEquiv (PImpl x y) = (PImpl (elimEquiv x) (elimEquiv y))
+elimEquiv (PEquiv x y) = (PAnd (PImpl (elimEquiv x) (elimEquiv y)) (PImpl (elimEquiv y) (elimEquiv x)))
+  
 --13. elimImpl. Función que elimina las implicaciones lógicas.
 elimImpl :: Prop -> Prop
-elimImpl p = error "Sin implementar."
+elimImpl (PVar x) = (PVar x)
+elimImpl (PNeg x) = (PNeg (elimImpl x))
+elimImpl (POr x y) = (POr (elimImpl x) (elimImpl y))
+elimImpl (PAnd x y) = (PAnd (elimImpl x) (elimImpl y))
+elimImpl (PImpl x y) = (POr (PNeg (elimImpl x)) (elimImpl y))
+elimImpl (PEquiv x y) = (PEquiv (elimImpl x) (elimImpl y))
 
 --14. deMorgan. Función que aplica las leyes de DeMorgan a una proposición.
 deMorgan :: Prop -> Prop
-deMorgan p = error "Sin implementar."
-
+--deMorgan p = error "Sin implementar."
+deMorgan (PVar x) = (PVar x)
+deMorgan (POr x y) = (POr (deMorgan x) (deMorgan y))
+deMorgan (PAnd x y) = (PAnd (deMorgan x) (deMorgan y))
+deMorgan (PImpl x y) = (PImpl (deMorgan x) (deMorgan y))
+deMorgan (PEquiv x y) = (PEquiv (deMorgan x) (deMorgan y))
+deMorgan (PNeg (POr x y)) = (PAnd (deMorgan (PNeg x)) (deMorgan (PNeg y)))
+deMorgan (PNeg (PAnd x y)) = (PAnd (deMorgan (PNeg x)) (deMorgan (PNeg y)))
+deMorgan (PNeg x) = (PNeg (deMorgan x))
 
 {-- Punto extra. Funciones que implementan la satisfacibilidad sobre conjuntos.
 --               Deben descomentar el siguiente código.--}
