@@ -65,17 +65,30 @@
 %%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIONES AQUÍ %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}
-\item 
-\item Para la función \code{estados} empleamos las funciones \code{vars}
-  implementada en el ejercicio 3 y que obtiene la lista de todas las
-  variables en una proposición, junto a \code{potenlist} que devuelve el
-  conjunto potencia de la lista que se le pase. Así podemos construir todos
-  los posibles estados existentes en la proposición.
-\item 
-\item La función 4 es realmente la función \code{potenlist} que se menciona
-  en el ejercicio 2, como la necesitabamos antes, decidimos implementarla
-  y \code{subconj} solo manda a llamar a \code{potenlist}.
-\item 
-\item Esta función solo realiza una comparación con \code{estados} y \code{modelos}.
+\item \code{interp} : ésta función emplea en su caso base [de la recursión]
+  a la función básica \code{elem} que implementa el \code{PRELUDE} de Haskell.
+  
+  Todos los demás son casos recursivos de los 5 conectivos en PROP.
+\item \code{estados} : ésta función emplea a las funciones 3 y 4 en su implementación.
+\item \code{vars} : se obtienen las posibles variables en la proposición y se concatenan.
+\item \code{subconj} : Por medio de una lista definida por comprensión [donde la cola es
+  el conjunto potenecia de la cola de la lista pasada como parámetro] se define una lista
+  y se le concatena el conjunto potencia de su cola.
+\item \code{modelos} : por medio de una lista por comprensión se definen las
+  interpretaciones de los estados [los que sean correctos].
+\item \code{tautología} : Verifica que los estados y los modelos de una proposición sean los mismos.
+\item \code{satisfacen} : verifica que la interpretación sea \code{True}.
+\item \code{satisf} : si los modelos no son una lista vacia [esto es, que haya al menos un modelo],
+  entonces la proposición es satisfacible. En otro caso, no se encontraron modelos y no es satisfacible.
+\item \code{insatisfacen} : ésta es la negación de la función 7.
+\item \code{contrad} : ésta es la negación de la función 8.
+\item \code{equiv} : basta ver que los estados de ambas proposiciones sean los mismos.
 \end{enumerate}
+Para las funciones: \code{elimEquiv, elimImpl, deMorgan}, se tienen los casos recursivos y los casos base,
+pero se tiene el cuidado de realizar los cambios a mano en cuando corresponda: por ejemplo, en las leyes
+de De Morgan se revisa la negación de la conjunción y de la disyunción, y es aquí donde se realiza el cambio
+de conjunción a disyunción [disyunción a conjunción] y se niegan ambas proposiciones.
+
+Las demás ya no las pudimos hacer, no nos interpretó la de \code{consecuencia} :(, dísculpa por entregar hasta
+ahora, no nos vuelve a pasar.
 \end{document}

@@ -6,6 +6,7 @@
 --}
 
 module Practica2 where
+--import qualified Data.Set as S
 
 --Prop. Tipo de datos para proposiciones lógicas.
 data Prop = PTrue | PFalse | PVar String | PNeg Prop | POr Prop Prop 
@@ -57,8 +58,7 @@ subconj (x:xs) = [x:ys | ys <- (subconj xs)] ++ (subconj xs)
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
-modelos f  = [i | i <- (estados f),
-              interp i f]
+modelos f  = [i | i <- (estados f), interp i f]
 
 --6. tautologia. Función que dice si una proposición es tautología.
 tautologia :: Prop -> Bool
@@ -108,7 +108,6 @@ elimImpl (PEquiv x y) = (PEquiv (elimImpl x) (elimImpl y))
 
 --14. deMorgan. Función que aplica las leyes de DeMorgan a una proposición.
 deMorgan :: Prop -> Prop
---deMorgan p = error "Sin implementar."
 deMorgan (PVar x) = (PVar x)
 deMorgan (POr x y) = (POr (deMorgan x) (deMorgan y))
 deMorgan (PAnd x y) = (PAnd (deMorgan x) (deMorgan y))
@@ -121,20 +120,47 @@ deMorgan (PNeg x) = (PNeg (deMorgan x))
 {-- Punto extra. Funciones que implementan la satisfacibilidad sobre conjuntos.
 --               Deben descomentar el siguiente código.--}
 
-{--
+-- Función auxiliar a la función estadosConj, que realiza la unión de
+-- conjuntos [implementados por listas].
+unionConj :: [[a]] -> [a]
+unionConj [] = []
+unionConj (x:xs) = x ++ (unionConj xs)
+
+-- Función auxiliar a la función estadosConj, que funge como la función
+-- vars pero en conjuntos de proposiciones.
+varsConj :: [Prop] -> [String]
+varsConj p = unionConj [(vars list) | list <- p]
+
+-- 15.
 estadosConj :: [Prop] -> [Estado]
+estadosConj p = subconj(varsConj p)
+
+-- 16.
 modelosConj :: [Prop] -> [Estado]
+modelosConj p = error "No implementada."
+
+-- 17.
 satisfenConj:: Estado -> [Prop] -> Bool
+satisfenConj e p = error "No implementada."
+{--
+-- 18.
 satisfConj:: [Prop] -> Bool
+satisfConj p = error "No implementada."
+
+-- 19.
 insatisfenConj:: Estado -> [Prop] -> Bool
+insatisfenConj e p = error "No implementada."
+
+-- 20.
 insatisfConj:: [Prop] -> Bool
+insatisfConj p = error "No implementada."
 
 --consecuencia. Función que determina si una proposición es consecuencia
 --				del conjunto de premisas.
 consecuencia: [Prop] -> Prop -> Bool
 consecuencia gamma phi = null [i | i <- estadosConj (phi : gamma),
-								satisfenConj i gamma,
-								not (satisfen i phi)]
+                               satisfenConj i gamma,
+                               not (satisfen i phi)]
 
 --argCorrecto. Función que determina si un argumento es lógicamente
 --				correcto dadas las premisas.

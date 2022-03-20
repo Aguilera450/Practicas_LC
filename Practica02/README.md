@@ -133,4 +133,5 @@ insatisfConj:: [Prop] -> Bool
 * [Lógica en Haskell.](https://www.cs.us.es/~jalonso/publicaciones/2007-Logica_en_Haskell.pdf)
 * [Funciones predefinidas en Haskell.](https://www.cs.us.es/~jalonso/cursos/i1m/doc/Funciones_basicas.html)
 * [Definiciones de listas por comprensión.](https://www.cs.us.es/~jalonso/cursos/i1m-16/temas/tema-5.html)
+* [Semántica de la Lógica de Proposiciones.](https://drive.google.com/file/d/1D6VSWcRkXK82omPk5U9LnZRzk3brpL8B/view)
 * [Operaciones conjuntistas con listas en Haskell.](https://www.glc.us.es/~jalonso/vestigium/i1m2018-operaciones-conjuntistas-con-listas-en-haskell/)
