@@ -1,5 +1,5 @@
 {--
-65;6602;1c-- Equipo: InvadirPolonia.
+-- Equipo: InvadirPolonia.
 -- Integrantes:
 -- *) Marco Silva Huerta: 316205326.
 -- *) Adrián Aguilera Moreno: 421005200.
@@ -37,16 +37,16 @@ interp e (PEquiv x y) = interp e (PAnd (PImpl x y) (PImpl y x))
 --2. estados. Función que devuelve una lista de todas las combinaciones
 -- 				posibles de los estados de una proposición.
 estados :: Prop -> [Estado]
-estados p = potenlist(vars p)
+estados p = subconj(vars p)
 
 --3. vars. Función que obtiene la lista de todas las variables de una proposición.
 vars :: Prop -> [String]
 vars (PVar f) = [f]
 vars (PNeg f) = vars f
-vars (PAnd f g) = vars f `union` vars g
-vars (POr f g) = vars f `union` vars g
-vars (PImpl f g) = vars f `union` vars g
-vars (PEquiv f g) = vars f `union` vars g
+vars (PAnd f g) = vars f ++ vars g
+vars (POr f g) = vars f ++ vars g
+vars (PImpl f g) = vars f ++ vars g
+vars (PEquiv f g) = vars f ++ vars g
 
 -- Función auxiliar union 
 -- Esta función recibe dos listas y las concatena 
@@ -54,25 +54,18 @@ vars (PEquiv f g) = vars f `union` vars g
 --  recorriendo la lista con notElem devolviendo 
 --  una nueva lista.
 union :: Eq a => [a] -> [a] -> [a]
-union xs ys = xs ++ [y | y <- ys, y `notElem` xs]
+union xs ys = xs ++ [y | y <- ys, (notElem y xs)]
 
 --4. subconj. Función que devuelve el conjunto potencia de una lista.
 subconj :: [a] -> [[a]]
-subconj p = (potenlist p)
-  
+subconj [] = [[]]
+subconj (x:xs) = [x:ys | ys <- (subconj xs)] ++ (subconj xs)
+
 --5. modelos. Función que devuelve la lista de todos los modelos posibles
 -- 				para una proposición.
 modelos :: Prop -> [Estado]
 modelos f  = [i | i <- (estados f),
               interp i f]
-
--- Función auxiliar para obtener el conjunto potencia de una 
---   lista. De modo que al recibir la lista de las variables de 
---   vars esta saca su conjunto potencia.
-potenlist ::  [a] -> [[a]]
-potenlist [] = [[]]
-potenlist (x:xs) = [x:ys | ys <- xss] ++ xss
-       where xss = potenlist xs
 
 --6. tautologia. Función que dice si una proposición es tautología.
 tautologia :: Prop -> Bool
