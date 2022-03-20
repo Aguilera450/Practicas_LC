@@ -130,7 +130,7 @@ insatisfConj:: [Prop] -> Bool
 #### *Nota: Esta prohibido utilizar la función ’map’ de Haskell.*
 
 ## Bibliografía (Consultas):
-* [Haskell.](https://www.haskell.org/)
-* [Recursión.](http://aprendehaskell.es/content/Recursion.html)
-* [La sintaxis de las funciones.](http://aprendehaskell.es/content/Funciones.html)
-* [Creando nuestros propios tipos y clases de tipos.](http://aprendehaskell.es/content/ClasesDeTipos.html)
+* [Lógica en Haskell.](https://www.cs.us.es/~jalonso/publicaciones/2007-Logica_en_Haskell.pdf)
+* [Funciones predefinidas en Haskell.](https://www.cs.us.es/~jalonso/cursos/i1m/doc/Funciones_basicas.html)
+* [Definiciones de listas por comprensión.](https://www.cs.us.es/~jalonso/cursos/i1m-16/temas/tema-5.html)
+* [Operaciones conjuntistas con listas en Haskell.](https://www.glc.us.es/~jalonso/vestigium/i1m2018-operaciones-conjuntistas-con-listas-en-haskell/)
