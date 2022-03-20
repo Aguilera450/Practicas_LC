@@ -27,8 +27,9 @@ instance Show Prop where
 
 
 --1. interp. Función que evalua una proposición dado el estado.
-interp :: Estado -> Prop -> Bool  
+interp :: Estado -> Prop -> Bool
 interp e (PVar x) = elem x e
+interp e (PNeg x) = not (interp e x)
 interp e (POr x y) = (interp e x) || (interp e y)
 interp e (PAnd x y) = (interp e x) && (interp e y)
 interp e (PImpl x y) = interp e (POr(PNeg x) y )
@@ -77,11 +78,11 @@ satisf p
 --9. insatisfen. Función que resuelve si una proposición es insatisfacible
 -- 					con cierto estado.
 insatisfen :: Estado -> Prop -> Bool
-insatisfen e p = error "Sin implementar."
+insatisfen e p = not (satisfen e p)
 
 --10. contrad. Función que dice si una proposición es una contradicción.
 contrad :: Prop -> Bool
-contrad p = error "Sin implementar."
+contrad p = not (satisf p)
 
 --11. equiv. Función que devuelve True si dos proposiciones son equivalentes.
 equiv :: Prop -> Prop -> Bool
