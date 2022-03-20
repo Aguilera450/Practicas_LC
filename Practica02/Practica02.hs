@@ -86,7 +86,7 @@ contrad p = not (satisf p)
 
 --11. equiv. Función que devuelve True si dos proposiciones son equivalentes.
 equiv :: Prop -> Prop -> Bool
-equiv p1 p2 = error "Sin implementar."
+equiv p1 p2 = (estados p1) == (estados p2)
 
 --12. elimEquiv. Función que elimina las equivalencias lógicas.
 elimEquiv :: Prop -> Prop
