@@ -48,14 +48,6 @@ vars (POr f g) = vars f ++ vars g
 vars (PImpl f g) = vars f ++ vars g
 vars (PEquiv f g) = vars f ++ vars g
 
--- Función auxiliar union 
--- Esta función recibe dos listas y las concatena 
---  verificando que no esten repetidos los elementos
---  recorriendo la lista con notElem devolviendo 
---  una nueva lista.
-union :: Eq a => [a] -> [a] -> [a]
-union xs ys = xs ++ [y | y <- ys, (notElem y xs)]
-
 --4. subconj. Función que devuelve el conjunto potencia de una lista.
 subconj :: [a] -> [[a]]
 subconj [] = [[]]
@@ -78,7 +70,9 @@ satisfen e p = error "Sin implementar."
 
 --8. satisf. Función que resuelve si una proposición es satisfacible.
 satisf :: Prop -> Bool
-satisf p = error "Sin implementar."
+satisf p
+  | (modelos p) /= [] = True
+  | otherwise = False
 
 --9. insatisfen. Función que resuelve si una proposición es insatisfacible
 -- 					con cierto estado.
