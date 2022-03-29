@@ -13,12 +13,28 @@ import Practica2
 -- 1. fnn. Función que devuelve la Forma Normal Negativa de una 
 --         proposición.
 fnn :: Prop -> Prop
-fnn p = error "Sin implementar."
+fnn p = deMorgan(elimImpl(elimEquiv p))
 
 -- 2. fnc. Función que devuelve la Forma Normal Conjuntiva de una 
 --         proposición.
 fnc :: Prop -> Prop
-fnc p = error "Sin implementar."
+fnc p = auxFNC (fnn p)
+
+-- Primera función auxiliar.
+auxFNC :: Prop -> Prop
+auxFNC (POr (PAnd f1 f2) g) = auxFNC (PAnd (POr (auxFNC f1) (auxFNC g)) (POr (auxFNC f2) (auxFNC g)))
+auxFNC (POr f (PAnd g1 g2)) = auxFNC (PAnd (POr (auxFNC f) (auxFNC g1)) (POr (auxFNC f) (auxFNC g2)))
+auxFNC (PAnd f g)           = PAnd (auxFNC f) (auxFNC g)
+auxFNC (POr f g) | hasConj (POr f g) = auxFNC (POr (auxFNC f) (auxFNC g))
+                 | otherwise         = POr (auxFNC f) (auxFNC g)
+auxFNC f = f
+
+-- Segunda función auxiliar.
+hasConj:: Prop -> Bool
+hasConj (PAnd f g) = True
+hasConj (POr f g) = (hasConj f) || (hasConj g)
+hasConj _          = False
+
 
 
 
