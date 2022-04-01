@@ -13,11 +13,25 @@ import Practica02
 -- 1. fnn. Función que devuelve la Forma Normal Negativa de una 
 --         proposición.
 fnn :: Prop -> Prop
-<<<<<<< HEAD
-fnn p = deMorgan (elimImpl (elimEquiv p))
-=======
-fnn p = deMorgan(elimImpl(elimEquiv p))
->>>>>>> origin/main
+fnn p = deMorgan(elimEquiv(elimImpl p))
+
+deMorgan :: Prop -> Prop
+deMorgan (PVar x)   = (PVar x)
+deMorgan (PNeg x)   = morganAux x
+deMorgan (PAnd x y) = (PAnd (deMorgan x) (deMorgan y))
+deMorgan (POr x y)  = (POr (deMorgan x) (deMorgan y))
+ 
+morganAux :: Prop -> Prop
+morganAux (PVar x)   = PNeg (PVar x)
+morganAux (PNeg x)   = deMorgan x 
+morganAux (PAnd x y) = POr (morganAux x) (morganAux y) 
+morganAux (POr x y)  = PAnd (morganAux x) (morganAux y) 
+
+-- <<<<<<< HEAD
+-- fnn p = deMorgan (elimImpl (elimEquiv p))
+-- =======
+-- fnn p = deMorgan(elimImpl(elimEquiv p))
+-- >>>>>>> origin/main
 
 -- 2. fnc. Función que devuelve la Forma Normal Conjuntiva de una 
 --         proposición.
