@@ -51,10 +51,10 @@ type Solucion = (Modelo, Formula)
 -- 3. unit. Función que aplica la regla unitaria.
 unit :: Solucion -> Solucion
 unit (m, []) = (m, [])
---unit (m, (x:xs):ys)
---  | xs == [] = (m ++ [x], elimina (x:xs) ys)
---  | otherwise = (a, [x:xs] ++ b) where (a,b) = unit (m, ys)
-unit (m, (y:ys):xs) = if ys == [] then (m ++ [y], elimina (y:ys) xs) else (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
+--unit (m, (y:ys):xs) = if ys == [] then (m ++ [y], elimina (y:ys) xs) else (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
+unit (m, (y:ys):xs)
+  | ys == [] = (m ++ [y], elimina (y:ys) xs)
+  | otherwise  = (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
 
 -- Función auxiliar elimina - elimina el elemento recibido de la lista recibida
 elimina :: Eq a => a -> [a] -> [a]
