@@ -68,7 +68,19 @@
 \renewcommand{\labelitemi}{\localtextbulletone}
 \begin{itemize}
 \item \code{fnn}
+  \begin{itemize}
+  \item Usamos las funciones: elimImpl, elimEquiv, deMorgan para obetner la forma normal negativa,
+    que estamos eliminando las implicaciones y equivalencias para después aplicar ley de De Morgan
+    y negar hasta que solo variables atómicas lo estén. 
+  \end{itemize}
+  
 \item \code{fnc}
+  \begin{itemize}
+  \item Aplicamos la forma normal conjuntiva más dos funciones auxiliares, una para que regresa
+    un True si es que encuentra conjunciones y la otra que hace ley de distribución sobre la
+    formula que se le ha pasado
+  \end{itemize}
+  
 \item \code{unit} : en busca de aplicar la regla del unitario se emplea una función auxiliar que
   \code{elimina} un elemento de una lista. Primero se verifica que sea la cabeza de la lista, en
   ese caso se mantiene la cola de la lista y se aplica nuevamente el proceso (pues el elemento
@@ -91,11 +103,26 @@
     repeticiones por ejemplo), pero con algún orden.
   \end{itemize}
 \item \code{split}
+  \begin{itemize}
+  \item La regla consiste en crear dos ramas, una positiva y otra negativa sacando únicamente una variable de la formula en este caso tomamos la primera y hacemos los dos caminos negando la variable de la segunda, hacemos una lista de las formulas y como sabemos que la primera variable de la formula será a la que le hacemos ramas, usando una función \textit{cabeza} obtenemos la letra que después pasamos a variable.  
+  \end{itemize}
 \item \code{conflict} : si se llega a la clausula vacia o no se obtiene algún modelo, entonces se lanza
   \code{True} como respuesta. En otro caso, se regresa \code{False}.
 \item \code{succes} : en caso de que nuestra fórmula se vuelva la vacía, hemos encontrado un modelo y
   \code{succes} devuelve \code{True}, en otro caso devuelve \code{False}.
 \item \code{appDPLL} : solo manda a llamar las funciones ya implementadas.
 \end{itemize}
+
+\begin{center}
+  \fbox{
+    \begin{minipage}[b][1\height]%
+      [t]{0.867\textwidth}
+      Matriculas:
+      \begin{itemize}
+      \item[1.] Marco Silva Huerta: 316205326.
+      \item[2.] Adrian Aguilera Moreno: 421005200.
+      \end{itemize}
+  \end{minipage}}
+\end{center}
 
 \end{document}
