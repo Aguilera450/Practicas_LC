@@ -64,7 +64,18 @@ elimina x (y:ys) | x == y    = elimina x ys
 
 -- 4. elim. Función que aplica la regla de eliminación. 
 elim :: Solucion -> Solucion
-elim (m, f) = error "Sin implementar."
+elim (m, f)
+  | m == []   = ([], f)
+  | otherwise = (m, elimPropRep [clausula | clausula<-f, length[literal | literal<-m, (elem literal clausula)]==0])
+
+-- Función auxiliar a "elim" que conserva el estado de una lista como si fuese un conjunto con orden, esto es
+-- no queremos proposiciones repetidas en nuestra lista.
+elimPropRep :: Eq a => [a] -> [a]
+elimPropRep [] = []
+elimPropRep (x:xs) = if elem x xs
+  then elimPropRep xs
+  else x : elimPropRep xs
+
 
 -- 5. red. Función que aplica la regla de reducción.
 red :: Solucion -> Solucion
