@@ -82,8 +82,6 @@ red :: Solucion -> Solucion
 red (m, f)
   | m == [] = ([],f)
   | otherwise = (m, (elimPropRep [ (elimVar literal clausula) | clausula<-f, literal<-m,(elem (neg(literal)) clausula)]) ++ (dif f [clausula | clausula<-f, literal<-m,(elem (neg(literal)) clausula)]))
---([],f) = ([],f)
---red (m, f) 
 
 -- Función que elimina la literal en la clausula. Auxiliar de "red".
 elimVar :: Literal -> Clausula -> Clausula
@@ -112,17 +110,25 @@ split (m, f) = error "Sin implementar."
 
 -- 7. conflict. Función que determina si la Solucion llegó a una contradicción.
 conflict :: Solucion -> Bool
-conflict (m, f) = error "Sin implementar."
+conflict (m, f)
+  | f == [[]]           = False
+  | m == [] && f == []  = False
+  | f == []             = False
+  | m == []             = False
+conflict ([p], f) = if notElem [neg p] f
+  then False
+  else True
+conflict ((x:xs), f) = if conflict([x], f)
+  then True
+  else conflict(xs, f)
 
 -- 8. success. Función que determina si la fórmula es satisfacible.
 success :: Solucion -> Bool
-success (m, f) = error "Sin implementar."
+success (m, f) =  f == []
 
 --9. appDPLL. Función que aplica las reglas anteriores una vez.
 appDPLL :: Solucion -> Solucion
-appDPLL (m, f) = error "Sin implementar."
-
-
+appDPLL (m, f) = red(elim(unit(m, f)))
 
 {-- Puntos Extra --}
 
