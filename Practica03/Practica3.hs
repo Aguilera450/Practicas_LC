@@ -15,63 +15,27 @@ import Practica02
 fnn :: Prop -> Prop
 fnn p = deMorgan(elimEquiv(elimImpl p))
 
-deMorgan :: Prop -> Prop
-deMorgan (PVar x)   = (PVar x)
-deMorgan (PNeg x)   = morganAux x
-deMorgan (PAnd x y) = (PAnd (deMorgan x) (deMorgan y))
-deMorgan (POr x y)  = (POr (deMorgan x) (deMorgan y))
- 
-morganAux :: Prop -> Prop
-morganAux (PVar x)   = PNeg (PVar x)
-morganAux (PNeg x)   = deMorgan x 
-morganAux (PAnd x y) = POr (morganAux x) (morganAux y) 
-morganAux (POr x y)  = PAnd (morganAux x) (morganAux y) 
-
--- <<<<<<< HEAD
--- fnn p = deMorgan (elimImpl (elimEquiv p))
--- =======
--- fnn p = deMorgan(elimImpl(elimEquiv p))
--- >>>>>>> origin/main
-
 -- 2. fnc. Función que devuelve la Forma Normal Conjuntiva de una 
 --         proposición.
 fnc :: Prop -> Prop
 fnc p = auxFNC (fnn p)
 
--- Primera función auxiliar.
+-- Función auxiliar a la función fnc que Distribuye de manera que queden conjunciones de disyunciones.
+-- Nota: se obvia que la proposición que recibe como parámetro esta en FNN.
 auxFNC :: Prop -> Prop
-auxFNC (POr (PAnd f1 f2) g) = auxFNC (PAnd (POr (auxFNC f1) (auxFNC g)) (POr (auxFNC f2) (auxFNC g)))
-auxFNC (POr f (PAnd g1 g2)) = auxFNC (PAnd (POr (auxFNC f) (auxFNC g1)) (POr (auxFNC f) (auxFNC g2)))
+auxFNC (POr (PAnd x y) z) = auxFNC (PAnd (POr (auxFNC x) (auxFNC z)) (POr (auxFNC y) (auxFNC z)))
+auxFNC (POr f (PAnd x y)) = auxFNC (PAnd (POr (auxFNC f) (auxFNC x)) (POr (auxFNC f) (auxFNC y)))
 auxFNC (PAnd f g)           = PAnd (auxFNC f) (auxFNC g)
-auxFNC (POr f g) | hasConj (POr f g) = auxFNC (POr (auxFNC f) (auxFNC g))
+auxFNC (POr f g) | hayConj (POr f g) = auxFNC (POr (auxFNC f) (auxFNC g))
                  | otherwise         = POr (auxFNC f) (auxFNC g)
 auxFNC f = f
 
--- Segunda función auxiliar.
-hasConj:: Prop -> Bool
-hasConj (PAnd f g) = True
-hasConj (POr f g) = (hasConj f) || (hasConj g)
-hasConj _          = False
+-- Función auxiliar a auxFNC que nos dice si hay conjunciones en la proposición que recibe como parámetro.
+hayConj:: Prop -> Bool
+hayConj (PAnd x y) = True
+hayConj (POr x y) = (hayConj x) || (hayConj y)
+hayConj _          = False
 
-
-
--- Función auxiliar, que define si una fórmula proposicional
--- contiene conjunciones o no.
-hayConjuncion :: Prop -> Bool
-hayConjuncion (PAnd x y) = True
-hayConjuncion (POr x y) = (hayConjuncion x) || (hayConjuncion y)
-hayConjuncion _ = False
-
--- Auxiliar de la Forma Normal Conjuntiva.
-auxFNC :: Prop -> Prop
-auxFNC (PAnd (POr f1 f2) g) = auxFNC
-   (PAnd (POr (auxFNC f1) (auxFNC g)) (POr (auxFNC f2) ( auxFNC g)))
-auxFNC (POr f (PAnd g1 g2)) = auxFNC
-   (PAnd (POr (auxFNC f) (auxFNC g1)) (POr ( auxFNC f) ( auxFNC g2)))
-auxFNC (PAnd f g) = (PAnd (auxFNC f) (auxFNC g) (POr f g))
-   | hayConjuncion (POr f g) =  auxFNC (Por (auxFNC f) (auxFNC g))
-   | otherwise = (POr (auxFNC f) (auxFNC g))
-auxFNC f = f
 
 
 {----- Algoritmo DPLL -----}

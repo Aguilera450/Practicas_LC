@@ -108,14 +108,18 @@ elimImpl (PEquiv x y) = (PEquiv (elimImpl x) (elimImpl y))
 
 --14. deMorgan. Función que aplica las leyes de DeMorgan a una proposición.
 deMorgan :: Prop -> Prop
-deMorgan (PVar x) = (PVar x)
-deMorgan (POr x y) = (POr (deMorgan x) (deMorgan y))
+deMorgan (PVar x)   = (PVar x)
+deMorgan (PNeg x)   = morganAux x
 deMorgan (PAnd x y) = (PAnd (deMorgan x) (deMorgan y))
-deMorgan (PImpl x y) = (PImpl (deMorgan x) (deMorgan y))
-deMorgan (PEquiv x y) = (PEquiv (deMorgan x) (deMorgan y))
-deMorgan (PNeg (POr x y)) = (PAnd (deMorgan (PNeg x)) (deMorgan (PNeg y)))
-deMorgan (PNeg (PAnd x y)) = (PAnd (deMorgan (PNeg x)) (deMorgan (PNeg y)))
-deMorgan (PNeg x) = (PNeg (deMorgan x))
+deMorgan (POr x y)  = (POr (deMorgan x) (deMorgan y))
+
+-- Auxiliar de la función deMorgan.
+morganAux :: Prop -> Prop
+morganAux (PVar x)   = PNeg (PVar x)
+morganAux (PNeg x)   = deMorgan x 
+morganAux (PAnd x y) = POr (morganAux x) (morganAux y) 
+morganAux (POr x y)  = PAnd (morganAux x) (morganAux y) 
+
 
 {-- Punto extra. Funciones que implementan la satisfacibilidad sobre conjuntos.
 --               Deben descomentar el siguiente código.--}
