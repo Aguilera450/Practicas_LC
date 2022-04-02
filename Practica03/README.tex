@@ -69,13 +69,33 @@
 \begin{itemize}
 \item \code{fnn}
 \item \code{fnc}
-\item \code{unit} : en busca de aplicar la regla de unitario
-\item 
-\item 
+\item \code{unit} : en busca de aplicar la regla del unitario se emplea una función auxiliar que
+  \code{elimina} un elemento de una lista. Primero se verifica que sea la cabeza de la lista, en
+  ese caso se mantiene la cola de la lista y se aplica nuevamente el proceso (pues el elemento
+  puede estar más de una vez en la lista, en teoría no queremos esto y buscamos evitar clausulas
+  duplicadas).
+\item \code{elim} : esta función aplica la regla de eliminación en el algoritmo \code{DPLL}. Esta
+  función emplea una función auxiliar \code{elimPropRep} que descarta a la cabeza de la lista siempre
+  que esta se encuentre contenida en la cola de la misma, en otro caso se conserva la cabeza de la
+  lista y se aplica la llamada recursiva de \code{elimPropRep} a la cola de la misma. Esta función
+  es muy parecida a \code{elimina}, pero en este caso no pasamos el elemento como parámetro.
+\item \code{red} : con esta función buscamos aplicar la regla de reducción en el algoritmo \code{DPLL}.
+  Para esto empleamos $3$ funciones auxiliares:
+  \begin{itemize}
+  \item[$\rightarrow$] \code{elimVar} : esta función elimina la literal que se le pasa como parámetro
+    de la clausula que, de igual manera, se le pasa como parámetro.
+  \item[$\rightarrow$] \code{neg} : Esta función elimina la proposición que se le pasa como parámetro,
+    sin importar la estructura de esta.
+  \item[$\rightarrow$] \code{dif} : realiza la diferencia entre listas, esta función se implementa bajo
+    la idea de que nuestras listas tengan operaciones como los conjuntos (esto nos servirá para evitar
+    repeticiones por ejemplo), pero con algún orden.
+  \end{itemize}
 \item \code{split}
-\item 
-\item 
-\item 
+\item \code{conflict} : si se llega a la clausula vacia o no se obtiene algún modelo, entonces se lanza
+  \code{True} como respuesta. En otro caso, se regresa \code{False}.
+\item \code{succes} : en caso de que nuestra fórmula se vuelva la vacía, hemos encontrado un modelo y
+  \code{succes} devuelve \code{True}, en otro caso devuelve \code{False}.
+\item \code{appDPLL} : solo manda a llamar las funciones ya implementadas.
 \end{itemize}
 
 \end{document}

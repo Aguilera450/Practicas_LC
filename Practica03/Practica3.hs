@@ -51,7 +51,6 @@ type Solucion = (Modelo, Formula)
 -- 3. unit. Función que aplica la regla unitaria.
 unit :: Solucion -> Solucion
 unit (m, []) = (m, [])
---unit (m, (y:ys):xs) = if ys == [] then (m ++ [y], elimina (y:ys) xs) else (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
 unit (m, (y:ys):xs)
   | ys == [] = (m ++ [y], elimina (y:ys) xs)
   | otherwise  = (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
@@ -164,7 +163,7 @@ conflict :: Solucion -> Bool
 conflict (m, f)
   | f == [[]]           = False
   | m == [] && f == []  = False
-  | f == []             = False
+--  | f == []             = False
   | m == []             = False
 conflict ([p], f) = if notElem [neg p] f
   then False
