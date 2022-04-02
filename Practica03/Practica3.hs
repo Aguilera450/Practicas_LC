@@ -105,8 +105,59 @@ dif (x:xs) (y:ys) = if elem x (y:ys)
 
 -- 6. split. Función que aplica la regla de la partición de una literal.
 --            Se debe tomar la primer literal que aparezca en la fórmula.
+-- Se hace concatenación de las dos ramas que hace la función split.
 split :: Solucion -> [Solucion]
-split (m, f) = error "Sin implementar."
+split (x, y) = varPositiva(x,y) ++ varNegativa(x,y)
+
+-- Función que genera la formula positiva al aplicar la regla split
+varPositiva :: Solucion -> [Solucion]
+varPositiva (x,y) = [(x ++ listaLiterales y ,y)]
+
+-- Función que genera la formula negativa al aplicar la regla split
+varNegativa :: Solucion -> [Solucion]
+varNegativa (x,y)=[(x ++ [negarVar(cabeza (listaLiterales y))], y)]
+
+-- Función auxiliar para aplicar deMorgan a una variable
+negarVar :: Literal -> Literal
+negarVar p = deMorgan(PNeg p)
+
+-- Funcion auxliar para tener la lista en una lista de litereales de la formula
+-- Recibe: una lista de clausulas (literales)
+-- Devuelve: La lista de las literales
+listaLiterales :: [Clausula] -> [Literal]
+listaLiterales (x:xs) = sacaPrimero x
+
+--Funcion auxiliar que busca y saca al primero de una formula
+sacaPrimero :: Clausula -> [Literal]
+sacaPrimero (x:xs)
+  | (uniVariable x) == True = [x]
+  | otherwise = [convierte(extraeVar x)]
+
+-- Función auxuliar para asegurarnos que es una unica variable
+-- Recibe: Prop
+-- Devuelve: True o False, de acuerdo a su longitud.
+-- Usamos función vars de Practica 02
+uniVariable :: Prop -> Bool
+uniVariable p
+    | length (vars p) == 1 || length (vars p) == 0 = True
+    | otherwise = False
+
+-- Función auxiliar para sacar la variable cabeza de una proposicion
+-- Recibe: Prop
+-- Devuelve: String con la cabeza que es la variable de la Prop
+-- Usamos función vars de Practica 02
+extraeVar :: Prop-> String
+extraeVar p = cabeza (vars p)
+
+-- Función auxiliar que convierte un string a un variable
+convierte :: String -> Literal
+convierte p = PVar p
+
+-- Función auxiliar para obtener la cabeza
+cabeza :: [a] -> a
+cabeza (x:_) = x
+
+-- FIN DEL 6 ------------------------------------------------------------------------
 
 -- 7. conflict. Función que determina si la Solucion llegó a una contradicción.
 conflict :: Solucion -> Bool
