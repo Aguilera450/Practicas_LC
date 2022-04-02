@@ -79,7 +79,31 @@ elimPropRep (x:xs) = if elem x xs
 
 -- 5. red. Función que aplica la regla de reducción.
 red :: Solucion -> Solucion
-red (m, f) = error "Sin implementar."
+red (m, f)
+  | m == [] = ([],f)
+  | otherwise = (m, (elimPropRep [ (elimVar literal clausula) | clausula<-f, literal<-m,(elem (neg(literal)) clausula)]) ++ (dif f [clausula | clausula<-f, literal<-m,(elem (neg(literal)) clausula)]))
+--([],f) = ([],f)
+--red (m, f) 
+
+-- Función que elimina la literal en la clausula. Auxiliar de "red".
+elimVar :: Literal -> Clausula -> Clausula
+elimVar p q = if elem (neg p) q then (dif q [(neg p)]) else q
+
+-- Función que niega la variable (si ya está negada, se aplica regla de Doble Negación) dada.
+-- Auxiliar de "red".
+neg :: Prop -> Prop
+neg (PVar p) = (PNeg (PVar p))
+neg (PNeg  (PVar p)) = PVar p
+
+-- Función que devuelve una lista con la diferencia entre dos listas. Auxiliar de "red".
+dif :: Eq a => [a] -> [a] -> [a]
+dif x y
+  | x == [] && y == [] = []
+  | y == []            = []
+  | x == []            = []
+dif (x:xs) (y:ys) = if elem x (y:ys)
+  then dif xs (y:ys)
+  else [x] ++ dif xs (y:ys)
 
 -- 6. split. Función que aplica la regla de la partición de una literal.
 --            Se debe tomar la primer literal que aparezca en la fórmula.
