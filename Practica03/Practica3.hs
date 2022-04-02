@@ -1,11 +1,12 @@
 {--
---
---
+-- Equipo: InvadirPolonia.
+-- Integrantes:
+-- *) Marco Silva Huerta: 316205326.
+-- *) Adrián Aguilera Moreno: 421005200.
 --}
 module Practica3 where
 
 import Practica02
-
 
 
 {----- Formas Normales -----}
@@ -174,7 +175,7 @@ conflict ((x:xs), f) = if conflict([x], f)
 
 -- 8. success. Función que determina si la fórmula es satisfacible.
 success :: Solucion -> Bool
-success (m, f) =  f == []
+success (m, f) =  f == [] && m /= []
 
 --9. appDPLL. Función que aplica las reglas anteriores una vez.
 appDPLL :: Solucion -> Solucion
