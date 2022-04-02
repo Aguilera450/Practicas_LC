@@ -121,3 +121,11 @@ Define una función que aplique las reglas básicas y split hasta obtener confli
 - Si necesitas mencionar peculiaridades sobre la ejecución de tu código, inclúyelas en el archivo README.
 -  Nunca olvides seguir los lineamientos del laboratorio.
 - El archivo para la implementación de la práctica se encuentra en la sección del laboratorio de la página del curso.
+
+
+
+## Bibliografía (Consultas):
+* [dpll.](https://github.com/parsonsmatt/dpll/blob/master/src/DPLL.hs)
+* [Razonamiento artifial.](https://es.coursera.org/lecture/razonamiento-artificial/algoritmo-dpll-2Zhbm)
+* [Formas normales en Haskell.](https://www.glc.us.es/~jalonso/vestigium/lmf2012-formas-normales-en-haskell/)
+* [Algoritmo DPLL (Davis, Putnam, Logemann y Loveland).](https://www.glc.us.es/~jalonso/vestigium/lmf2013-algoritmo-dpll-davis-putnam-logemann-y-loveland/)
