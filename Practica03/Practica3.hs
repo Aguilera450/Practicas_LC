@@ -33,7 +33,7 @@ auxFNC f = f
 -- Función auxiliar a auxFNC que nos dice si hay conjunciones en la proposición que recibe como parámetro.
 hayConj:: Prop -> Bool
 hayConj (PAnd x y) = True
-hayConj (POr x y) = (hayConj x) || (hayConj y)
+hayConj (POr x y)  = (hayConj x) || (hayConj y)
 hayConj _          = False
 
 
@@ -50,7 +50,17 @@ type Solucion = (Modelo, Formula)
 
 -- 3. unit. Función que aplica la regla unitaria.
 unit :: Solucion -> Solucion
-unit (m, f) = error "Sin implementar."
+unit (m, []) = (m, [])
+--unit (m, (x:xs):ys)
+--  | xs == [] = (m ++ [x], elimina (x:xs) ys)
+--  | otherwise = (a, [x:xs] ++ b) where (a,b) = unit (m, ys)
+unit (m, (y:ys):xs) = if ys == [] then (m ++ [y], elimina (y:ys) xs) else (a, [y:ys] ++ b) where (a,b) = unit (m, xs)
+
+-- Función auxiliar elimina - elimina el elemento recibido de la lista recibida
+elimina :: Eq a => a -> [a] -> [a]
+elimina x [] = []
+elimina x (y:ys) | x == y    = elimina x ys
+                 | otherwise = y : elimina x ys
 
 -- 4. elim. Función que aplica la regla de eliminación. 
 elim :: Solucion -> Solucion
