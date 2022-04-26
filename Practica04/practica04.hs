@@ -19,7 +19,6 @@ type Nombre = String
 
 type Subst = [(Nombre,Term)]
 
-
 --Instancia Show para Term.
 instance Show Term where
   show (V x) = x
@@ -41,17 +40,47 @@ instance Show Form where
   show (Ex x f) = "Ein " ++ x ++ " (" ++ show f ++ ")"
 
 
-
 --1. -alcance. Función que devuelve el alcance de los cuantificadores de
 --          una fórmula.
 -- alcance (All "x" (Ex "y" (Pr "P" [V "x", V "y"])))
 alcance :: Form -> [(Form, Form)]
-alcance f = error "Sin implementar."
+alcance NForm = []
+alcance TrueF = []
+alcance FalseF = []
+alcance (Pr p f) = []
+alcance (Eq f1 f2) = []
+alcance (Neg f) = alcance f
+alcance (Conj f1 f2) = []
+alcance (Disy f1 f2) = []
+alcance (Imp f1 f2) = []
+alcance (Equi f1 f2) = []
+alcance (Ex x f) = [(Ex x (NForm), f)] ++ alcance f
+alcance (All x f) = [(All x (NForm),f)] ++ alcance f
 
 --2. -bv. Función que devuelve las variables ligadas de una fórmula.
 -- bv (All "x" (Ex "y" (Pr "P" [V "x", V "y", V "z"])))
 bv :: Form -> [Nombre]
-bv f = error "Sin implementar."
+bv NForm = []
+bv TrueF = []
+bv FalseF = []
+bv (Pr p f) = []
+bv (Eq f1 f2) = []
+bv (Neg f) = []
+bv (Conj f1 f2) = []
+bv (Disy f1 f2) = []
+bv (Imp f1 f2) = []
+bv (Equi f1 f2) = []
+bv (Ex p f) = elimPropRep ([p] ++ bv f)
+bv (All p f) = elimPropRep ([p] ++ bv f)
+
+-- Función auxiliar de < bv > para elimiar repetidos 
+-- Esta función esta reciclada de la practica03
+elimPropRep :: Eq a => [a] -> [a]
+elimPropRep [] = []
+elimPropRep (x:xs) = if elem x xs
+  then elimPropRep xs
+  else x : elimPropRep xs
+
 
 --3. -fv. Función que devuelve las variables libres de una fórmula.
 -- fv (Ex "y" (Pr "P" [V "x", V "z"]))
