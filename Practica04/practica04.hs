@@ -108,18 +108,18 @@ varsFormu (All x f) = elimPropRep(varsFormu f)
 
 -- 2da Funcion Auxiliar 
 -- Separamos las variables de un termino.
--- varsConjunto:  varsTerm (V "x")
+-- varsdTermino (V "x")
 varsdTermino :: Term -> [Nombre]
 varsdTermino (V x) = [x]
 varsdTermino(F f []) = []
 varsdTermino (F f [x]) = varsdTermino x
 varsdTermino (F f (x:xs)) = varsdTermino x ++ varsConjunto xs
 
-
 -- 3ra Funcion Auxiliar
 -- Separamos las variables de un conjunto de terminos.
 -- varsConjunto [V "a", F "x" []]
 varsConjunto :: [Term] -> [Nombre]
+varsConjunto [] = []
 varsConjunto [x] = varsdTermino x
 varsConjunto (x:xs) = varsdTermino x ++ varsConjunto xs
 
