@@ -67,25 +67,20 @@
 \newcommand{\localtextbulletone}{\textcolor{black}{\raisebox{.45ex}{\rule{.6ex}{.6ex}}}}
 \renewcommand{\labelitemi}{\localtextbulletone}
 \begin{itemize}
-\item \code{alcance}: 
+    \item \code{alcance}: Hacemos recursión en los cuantificadores para determinar el alcance de las variable que esta reconociendo y concatenamos con la formula. 
   
-\item \code{bv}:
+    \item \code{bv}: Para obtener las variables ligadas haces recursión sobre los cuantificadores y vamos concatenando. Usamos una función auxiliar para eliminar variables repetidas. 
   
-\item \code{fv}:
+    \item \code{fv}: Para obtener las variables libres primero obtenemos todas las variables haciendo recursión en los operadores y cuantificadores eliminando los repetidos que van saliendo. Para eso usamos la primera opción auxiliar que es separar la variable de su termino o bien usando otra función auxiliar quitamos las variables de un conjunto de términos. Finalmente obteniendo la lista de todas las variables hacemos la operacion diferencia con las variables ligadas para así obtener las variables libres.
   
-\item \code{sustTerm}: Función que realiza la sustitución de variables en algún término.
-  Se emplea la función auxiliar \code{sustTermAux} que hace la sustitución en un conjunto
-  de términos.
+    \item \code{sustTerm}: Función que realiza la sustitución de variables en algún término.
+    Se emplea la función auxiliar \code{sustTermAux} que hace la sustitución en un conjunto de términos.
   
-\item \code{sustForm}: Por medio de patrones se realiza la identificación de casos base y
-  recursivos, así definimos los casos en los que se puede o no aplciar la sustitución.
-  En algunos casos se segmenta usando \code{if} y \code{else} que nos proporciona
-  \code{Haskell}.
+    \item \code{sustForm}: Por medio de patrones se realiza la identificación de casos base y recursivos, así definimos los casos en los que se puede o no aplciar la sustitución.
+    En algunos casos se segmenta usando \code{if} y \code{else} que nos proporciona \code{Haskell}.
   
-\item \code{alphaEq}: Se realiza un análisis de casos por medio de patrones, en algunos
-  de estos casos se segmenta usando guardas.
+    \item \code{alphaEq}: Se realiza un análisis de casos por medio de patrones, en algunos de estos casos se segmenta usando guardas.
 \end{itemize}
-
 \begin{center}
   \fbox{
     \begin{minipage}[b][1\height]%
