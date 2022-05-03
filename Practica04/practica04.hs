@@ -7,13 +7,13 @@
 module Practica4 where
 
 --Definición del tipo de datos para términos.
-data Term = V Nombre | F Nombre [Term]
+data Term = V Nombre | F Nombre [Term] deriving (Eq)
 
 --Definición del tipo de datos para fórmulas.
 data Form = NForm | TrueF | FalseF | Pr Nombre [Term] | Eq Term Term | 
             Neg Form | Conj Form Form | Disy Form Form | 
             Imp Form Form | Equi Form Form | All Nombre Form | 
-            Ex Nombre Form
+            Ex Nombre Form deriving (Eq)
 
 type Nombre = String
 
@@ -134,19 +134,59 @@ diferencia xs ys = zs
 --4. -sustTerm. Función que realiza la sustitución de variables en un término.
 -- sustTerm F "f" [V "x", F "a" []] [("x", V "y")]
 sustTerm :: Term -> Subst -> Term
-sustTerm t s = error "Sin implementar."
+sustTerm (V x) [] = V x
+sustTerm (V x) ((n,t):ts) = if x == n then t else sustTerm (V x) ts
+sustTerm (F n t) s = F n (sustTermAux t s)
+
+-- Función auxiliar para la función sustTermAux que realiza la
+-- sustitución a un conjunto de términos.
+sustTermAux :: [Term] -> Subst -> [Term]
+sustTermAux t [] = t
+sustTermAux [] s = []
+sustTermAux (x:xs) s = [sustTerm x s] ++ sustTermAux xs s
+
 
 --5. -sustForm. Función que realiza la sustitución de variables en una 
 --          fórmula sin renombramientos.
 -- sustForm (Ex "x" (Pr "P" [V "x", V "y"])) [("y", F "a" [])]
 sustForm :: Form -> Subst -> Form
-sustForm f s = error "Sin implementar."
+sustForm f [] = f
+sustForm NForm s =  error "No se puede sustituir en una fórmula vacía :("
+sustForm TrueF s =  error "No se puede sustituir en constantes lógicas :("
+sustForm FalseF s = error "No se puede sustituir en constantes lógicas :("
+sustForm (Pr p (t:ts)) s = Pr p (sustTermAux (t:ts) s)
+sustForm (Eq t1 t2) s = Eq (sustTerm t1 s) (sustTerm t2 s)
+sustForm (Neg f) s = Neg (sustForm f s)
+sustForm (Conj f1 f2) s = Conj (sustForm f1 s) (sustForm f2 s)
+sustForm (Disy f1 f2) s = Disy (sustForm f1 s) (sustForm f2 s)
+sustForm (Imp f1 f2) s = Imp (sustForm f1 s) (sustForm f2 s)
+sustForm (Equi f1 f2) s = Equi (sustForm f1 s) (sustForm f2 s)
+sustForm (All x f) ((n,t):ts) = if elem n (bv (All x f)) then (sustForm (All x f) ts) else sustForm (All x  (sustForm f [(n,t)])) ts
+sustForm (Ex x f) ((n,t):ts) =  if elem n (bv (All x f)) then (sustForm (All x f) ts) else sustForm (All x  (sustForm f [(n,t)])) ts
 
 --6. -alphaEq. Función que dice si dos fórmulas son alpha-equivalentes.
 -- alphaEq (Ex "x" (Pr "P" [V "x", V "z"])) (Ex "y" (Pr "P" [V "y", V "z"])) True
 -- alphaEq (Ex "y" (Pr "P" [V "w", V "z"])) (Ex "y" (Pr "P" [V "x", V "z"])) False
 alphaEq :: Form -> Form -> Bool
-alphaEq f1 f2 = error "Sin implementar."
+alphaEq x y
+  | x == y = True
+  | not (length (fv x) == length (fv y) && length (fv x) == length (fv x)) = False
+alphaEq (Neg x) y = if x == y then False else length (alcance x) == length (alcance y)
+alphaEq x (Neg y) = if x == y then False else length (alcance x) == length (alcance y)
+alphaEq (Neg f1) (Neg f2) = alphaEq f1 f2
+alphaEq (Ex x f1) (Ex y f2)
+  | f1 == f2 = True
+  | otherwise = alphaEq f1 f2
+alphaEq (All x f1) (All y f2)
+  | f1 == f2 = True
+  | otherwise = alphaEq f1 f2
+alphaEq (Ex x f1) (All y f2)  = if (f1 == f2) || (alphaEq f1 f2) then False else length (alcance f1) == length (alcance f2)
+alphaEq (All y f1) (Ex x f2)  = if (f1 == f2) || (alphaEq f1 f2) then False else length (alcance f1) == length (alcance f2)
+alphaEq (Imp f1 f2) (Imp f3 f4) = (alphaEq f1 f3) && (alphaEq f2 f4)
+--alphaEq (Eq t1 t2) (Eq t3 t4) = (alphaEq t1 t3) || (alphaEq t1 t4) || (alphaEq t2 t3) || (alphaEq t2 t4)
+alphaEq (Disy f1 f2) (Disy f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
+alphaEq (Conj f1 f2) (Conj f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
+alphaEq (Equi f1 f2) (Equi f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
 
 {-- Puntos Extra
 renom :: Form -> Form
