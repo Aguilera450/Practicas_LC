@@ -128,20 +128,19 @@ diferencia :: Eq a => [a] -> [a] -> [a]
 diferencia xs ys = zs
     where zs = [x | x <- xs, x `notElem` ys]
 
-
 --4. -sustTerm. Función que realiza la sustitución de variables en un término.
 -- sustTerm F "f" [V "x", F "a" []] [("x", V "y")]
 sustTerm :: Term -> Subst -> Term
-sustTerm (V x) [] = V x
-sustTerm (V x) ((n,t):ts) = if x == n then t else sustTerm (V x) ts
-sustTerm (F n t) s = F n (sustTermAux t s)
+sustTerm (V var) [] = V var
+sustTerm (V var) ((var',t):ts) = if var == var' then t else sustTerm (V var) ts
+sustTerm (F f t) sust = F f (sustTermAux t sust)
 
 -- Función auxiliar para la función sustTermAux que realiza la
 -- sustitución a un conjunto de términos.
 sustTermAux :: [Term] -> Subst -> [Term]
-sustTermAux t [] = t
-sustTermAux [] s = []
-sustTermAux (x:xs) s = [sustTerm x s] ++ sustTermAux xs s
+sustTermAux term [] = term
+sustTermAux [] sust = []
+sustTermAux (x:xs) sust = [sustTerm x sust] ++ (sustTermAux xs sust)
 
 
 --5. -sustForm. Función que realiza la sustitución de variables en una 
