@@ -39,8 +39,6 @@ instance Show Form where
   show (All x f) = "Alle " ++ x ++ " (" ++ show f ++ ")" 
   show (Ex x f) = "Ein " ++ x ++ " (" ++ show f ++ ")"
 
-
-
 --1. -alcance. Función que devuelve el alcance de los cuantificadores de
 --          una fórmula.
 -- alcance (All "x" (Ex "y" (Pr "P" [V "x", V "y"])))
@@ -86,7 +84,7 @@ elimPropRep (x:xs) = if elem x xs
 --3. -fv. Función que devuelve las variables libres de una fórmula.
 -- fv (Ex "y" (Pr "P" [V "x", V "z"]))
 fv :: Form -> [Nombre]
-fv f = diferencia(varsFormu f) (bv f)
+fv f = diferencia (varsFormu f) (bv f)
 
 -- 1ra Función Auxiliar
 -- Buscamos obtener todas las variables de la fórmula
@@ -170,7 +168,7 @@ sustForm (Ex x f) ((n,t):ts) =  if elem n (bv (All x f)) then (sustForm (All x f
 alphaEq :: Form -> Form -> Bool
 alphaEq x y
   | x == y = True
-  | not (length (fv x) == length (fv y) && length (fv x) == length (fv x)) = False
+  | not (length (fv x) == length (fv y) && length (fv x) == length (fv x) && length (alcance x) == length (alcance y)) = False
 alphaEq (Neg x) y = if x == y then False else length (alcance x) == length (alcance y)
 alphaEq x (Neg y) = if x == y then False else length (alcance x) == length (alcance y)
 alphaEq (Neg f1) (Neg f2) = alphaEq f1 f2
@@ -180,10 +178,16 @@ alphaEq (Ex x f1) (Ex y f2)
 alphaEq (All x f1) (All y f2)
   | f1 == f2 = True
   | otherwise = alphaEq f1 f2
-alphaEq (Ex x f1) (All y f2)  = if (f1 == f2) || (alphaEq f1 f2) then False else length (alcance f1) == length (alcance f2)
-alphaEq (All y f1) (Ex x f2)  = if (f1 == f2) || (alphaEq f1 f2) then False else length (alcance f1) == length (alcance f2)
+alphaEq (Ex x f1) (All y f2)
+  | f1 == f2 || alphaEq f1 f2 = False
+  | otherwise = True
+alphaEq (All y f1) (Ex x f2)
+  | f1 == f2 || alphaEq f1 f2 = False
+  | otherwise = True
+alphaEq (Pr p t1) (Pr q t2)
+  | p == q = length t1 == length t2
+  | otherwise = False
 alphaEq (Imp f1 f2) (Imp f3 f4) = (alphaEq f1 f3) && (alphaEq f2 f4)
---alphaEq (Eq t1 t2) (Eq t3 t4) = (alphaEq t1 t3) || (alphaEq t1 t4) || (alphaEq t2 t3) || (alphaEq t2 t4)
 alphaEq (Disy f1 f2) (Disy f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
 alphaEq (Conj f1 f2) (Conj f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
 alphaEq (Equi f1 f2) (Equi f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
