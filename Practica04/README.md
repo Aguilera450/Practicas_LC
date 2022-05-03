@@ -84,3 +84,6 @@ Implementa las funciones correspondientes al renombramiento de variables y la su
 - Si necesitas mencionar peculiaridades sobre la ejecución de tu código, inclúyelas en el archivo README.
 - Recuerda seguir los lineamientos del laboratorio.
 - El archivo para la implementación de la práctica se encuentra en la sección del laboratorio de la página del curso.
+
+# Bibliografía (COnsultas):
+- [LPO en Haskell.](https://idus.us.es/bitstream/handle/11441/63139/Paluzo%20Hidalgo%20Eduardo%20TFG.pdf;jsessionid=4B5BBA65A8F4272E7AAE487CE5CD88A7?sequence=1)
