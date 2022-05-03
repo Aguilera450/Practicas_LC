@@ -1,0 +1,101 @@
+\documentclass{article}
+
+% Symbols
+\usepackage{amsfonts, amsthm}
+\usepackage{upgreek}
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amssymb, latexsym, amsmath}
+
+%Algorithms
+\usepackage[ruled,lined,linesnumbered,commentsnumbered]{algorithm2e}
+
+%% Identación
+\setlength{\parindent}{0cm}
+
+% Código
+\newcommand{\code}[1]{\textcolor{white!25!black}{\texttt{#1}}}
+\usepackage{listings}
+
+%AMS
+\usepackage{amsthm}
+\newtheorem{algo-thm}{Algoritmo}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage{pgf}
+
+% Margins
+\addtolength{\voffset}{-1.5cm}
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\textheight}{3cm}
+
+%Header-Footer
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{1pt}
+
+\newcommand{\set}[1]{
+  \left\{ #1 \right\}
+}
+
+\footskip = 50pt
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancyplain}
+
+\begin{document}
+\title{UNIVERSIDAD NACIONAL AUT\'ONOMA DE M\'EXICO\\ Facultad de Ciencias}
+\author{Integrantes:\\
+  Marco Silva Huerta\\
+  Adri\'an Aguilera Moreno\\}
+\date{}
+\maketitle
+\begin{center}
+  \includegraphics[scale=0.20]{../Imagen/Portada.jpg}\\[0.4cm]
+  \Large
+  \bf{Lógica Computacional}
+  \normalsize
+\end{center}
+\newpage
+\fancyhead[r]{ Lógica Computacional 2022-2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{\LARGE{Práctica 3}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIONES AQUÍ %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\localtextbulletone}{\textcolor{black}{\raisebox{.45ex}{\rule{.6ex}{.6ex}}}}
+\renewcommand{\labelitemi}{\localtextbulletone}
+\begin{itemize}
+\item \code{alcance}: 
+  
+\item \code{bv}:
+  
+\item \code{fv}:
+  
+\item \code{sustTerm}: Función que realiza la sustitución de variables en algún término.
+  Se emplea la función auxiliar \code{sustTermAux} que hace la sustitución en un conjunto
+  de términos.
+  
+\item \code{sustForm}: Por medio de patrones se realiza la identificación de casos base y
+  recursivos, así definimos los casos en los que se puede o no aplciar la sustitución.
+  En algunos casos se segmenta usando \code{if} y \code{else} que nos proporciona
+  \code{Haskell}.
+  
+\item \code{alphaEq}: Se realiza un análisis de casos por medio de patrones, en algunos
+  de estos casos se segmenta usando guardas.
+\end{itemize}
+
+\begin{center}
+  \fbox{
+    \begin{minipage}[b][1\height]%
+      [t]{0.867\textwidth}
+      Matriculas:
+      \begin{itemize}
+      \item[1.] Marco Silva Huerta: 316205326.
+      \item[2.] Adrian Aguilera Moreno: 421005200.
+      \end{itemize}
+  \end{minipage}}
+\end{center}
+
+\end{document}
