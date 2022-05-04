@@ -165,34 +165,98 @@ sustForm (Ex x f) ((n,t):ts) =  if elem n (bv (Ex x f)) then (sustForm (Ex x f) 
 -- alphaEq (Ex "x" (Pr "P" [V "x", V "z"])) (Ex "y" (Pr "P" [V "y", V "z"])) True
 -- alphaEq (Ex "y" (Pr "P" [V "w", V "z"])) (Ex "y" (Pr "P" [V "x", V "z"])) False
 alphaEq :: Form -> Form -> Bool
-alphaEq x y
-  | x == y = True
-  | not (length (fv x) == length (fv y) && length (fv x) == length (fv x) && length (alcance x) == length (alcance y)) = False
-alphaEq (Neg x) y = if x == y then False else length (alcance x) == length (alcance y)
-alphaEq x (Neg y) = if x == y then False else length (alcance x) == length (alcance y)
-alphaEq (Neg f1) (Neg f2) = alphaEq f1 f2
-alphaEq (Ex x f1) (Ex y f2)
-  | f1 == f2 = True
-  | otherwise = alphaEq f1 f2
-alphaEq (All x f1) (All y f2)
-  | f1 == f2 = True
-  | otherwise = alphaEq f1 f2
-alphaEq (Ex x f1) (All y f2)
-  | f1 == f2 || alphaEq f1 f2 = False
-  | otherwise = True
-alphaEq (All y f1) (Ex x f2)
-  | f1 == f2 || alphaEq f1 f2 = False
-  | otherwise = True
-alphaEq (Pr p t1) (Pr q t2)
-  | p == q = length t1 == length t2
-  | otherwise = False
-alphaEq (Imp f1 f2) (Imp f3 f4) = (alphaEq f1 f3) && (alphaEq f2 f4)
-alphaEq (Disy f1 f2) (Disy f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
-alphaEq (Conj f1 f2) (Conj f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
-alphaEq (Equi f1 f2) (Equi f3 f4) = ((alphaEq f1 f3) && (alphaEq f2 f4)) || ((alphaEq f1 f4) && (alphaEq f2 f3))
+alphaEq f1 f2 = (fv f1) == (fv f2) && (formEquiv f1 f2)
 
-{-- Puntos Extra
+-- 1er Función auxiliar. Nos dice si dos fórmulas son equivalentes.
+formEquiv :: Form -> Form -> Bool
+formEquiv NForm NForm = True
+formEquiv NForm g = False
+formEquiv TrueF TrueF = True
+formEquiv TrueF g = True
+formEquiv FalseF FalseF = True
+formEquiv FalseF g = False
+formEquiv (Pr p1 t1) (Pr p2 t2) = True && (termEqConj t1 t2)
+formEquiv (Pr p t) g = False
+formEquiv (Eq f1 f2) (Eq g1 g2) =  True && (termEquiv f1 g1) && (termEquiv f2 g2)
+formEquiv (Eq f1 f2) g = False
+formEquiv (Neg f) (Neg g) = True && (formEquiv f g)
+formEquiv (Neg f) g = False
+formEquiv (Conj f1 f2) (Conj g1 g2) = True && (formEquiv f1 g1) && (formEquiv f2 g2)
+formEquiv (Conj f1 f2) f = False
+formEquiv (Disy f1 f2) (Disy g1 g2) = True && (formEquiv f1 g1) && (formEquiv f2 g2)
+formEquiv (Disy f1 f2) f = False
+formEquiv (Imp f1 f2) (Imp g1 g2) = True && (formEquiv f1 g1) && (formEquiv f2 g2)
+formEquiv (Imp f1 f2) f = False
+formEquiv (Equi f1 f2) (Equi g1 g2) = True && (formEquiv f1 g1) && (formEquiv f2 g2)
+formEquiv (Equi f1 f2) f = False
+formEquiv (Ex x f) (Ex y g) = True && (formEquiv f g)
+formEquiv (Ex x f) g = False
+formEquiv (All x f) (All y g) = True && (formEquiv f g)
+formEquiv (All x f) g = False
+
+-- 2da función auxiliar. Nos dice si dos terminos son equivalentes.
+termEquiv :: Term -> Term -> Bool
+termEquiv (V x) (V y) = True
+termEquiv (V x) f = False
+termEquiv (F f t) (F f' t') = True && termEqConj t t'
+termEquiv (F f t) t' = False
+
+-- 3ra función auxiliar. Nos dice si dos conjuntos (representados por listas) de terminos
+-- son equivalentes.
+termEqConj :: [Term] -> [Term] -> Bool
+termEqConj [] [] = True
+termEqConj [] t = False
+termEqConj t [] = False
+termEqConj [a] [b] = termEquiv a b
+termEqConj [a] (y:ys) = (termEquiv a y) && termEqConj [a] ys
+termEqConj (x:xs) [b] = (termEquiv x b) && (termEqConj xs [b])
+termEqConj (x:xs) (y:ys) = (termEqConj [x] [y]) && (termEqConj [x] ys) && (termEqConj xs [y]) && (termEqConj xs ys)
+
+{-------------------- Puntos Extra --------------------}
+-- 1. Función que renombra variables ligadas.
 renom :: Form -> Form
+renom TrueF  = TrueF
+renom FalseF  = FalseF
+renom (Pr p t) = (Pr p t)
+renom (Eq t t') = (Eq t t')
+renom (Neg t)  = Neg (renom t)
+renom (Conj t t') = Conj (renom t) (renom t')
+renom (Disy t t') = Disy (renom t) (renom t')
+renom (Imp t t') = Imp (renom t) (renom t')
+renom (Equi t t') = Equi (renom t) (renom t')
+renom (All n f) = (All (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+renom (Ex n f) = (Ex (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+
+
+-- 2. Renombra las variables ligadas de una fórmula de tal manera en que no se
+-- renombren por las variables iniciales en ningún punto.
 renomConj :: Form -> Form
+renomConj f = renAuxConj f (fv f)
+
+-- Función que renombra la variables ligadas de una fórmula donde sus  nombres son ajenos a los de una lista dada.
+renAuxConj :: Form -> [Nombre] -> Form
+renAuxConj TrueF l = TrueF
+renAuxConj FalseF  l = FalseF
+renAuxConj (Pr p s)l  = (Pr p s)
+renAuxConj (Eq t t') l = (Eq t t')
+renAuxConj (Neg t)  l = Neg (renAuxConj t l)
+renAuxConj (Conj t t') l = Conj (renAuxConj t l) (renAuxConj t' l)
+renAuxConj (Disy t t') l = Disy (renauxconj t l) (renAuxConj t' l)
+renAuxConj (Imp t t') l = Imp (renauxconj t l) (renAuxConj t' l)
+renAuxConj (Equi t t') l = Equi (renAuxConj t l) (renAuxConj t' l)
+renAuxConj (All n f) l = if(not (elem (n++"'") l ) ) 
+                        then (All (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+                        else renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
+renauxconj (Ex n f) l = if(not (elem (n++"'") l ) ) 
+                        then (Ex (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+                        else renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
+
+-- 3. Función que aplica la sustitución a una fórmula alpha-equivalente.
 sustFormAlpha :: Form -> Subst -> Form
---}
+sustFormAlpha f sust = sustForm(renAuxConj f ((listavarSus sust)++(fv f))) sust
+
+-- Regresa una lista con las variables a sustituir que conforman esa sustitución (e.g. x := y, entonces regresa [x]).
+listavarSus::Subst->[Nombre]
+listavarSus []        = []
+listavarSus [sust]    = [fst sust]                 -- fst devuelve el primer elemento (item) en una tupla.
+listavarSus (sust:ss) = fst sust:(listavarSus ss)  -- Aquí también se usa fst.
