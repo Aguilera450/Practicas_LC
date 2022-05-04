@@ -159,7 +159,7 @@ sustForm (Disy f1 f2) s = Disy (sustForm f1 s) (sustForm f2 s)
 sustForm (Imp f1 f2) s = Imp (sustForm f1 s) (sustForm f2 s)
 sustForm (Equi f1 f2) s = Equi (sustForm f1 s) (sustForm f2 s)
 sustForm (All x f) ((n,t):ts) = if elem n (bv (All x f)) then (sustForm (All x f) ts) else sustForm (All x  (sustForm f [(n,t)])) ts
-sustForm (Ex x f) ((n,t):ts) =  if elem n (bv (All x f)) then (sustForm (All x f) ts) else sustForm (All x  (sustForm f [(n,t)])) ts
+sustForm (Ex x f) ((n,t):ts) =  if elem n (bv (Ex x f)) then (sustForm (Ex x f) ts) else sustForm (Ex x  (sustForm f [(n,t)])) ts
 
 --6. -alphaEq. Función que dice si dos fórmulas son alpha-equivalentes.
 -- alphaEq (Ex "x" (Pr "P" [V "x", V "z"])) (Ex "y" (Pr "P" [V "y", V "z"])) True
