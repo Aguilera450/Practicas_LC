@@ -244,12 +244,12 @@ renAuxConj (Conj t t') l = Conj (renAuxConj t l) (renAuxConj t' l)
 renAuxConj (Disy t t') l = Disy (renauxconj t l) (renAuxConj t' l)
 renAuxConj (Imp t t') l = Imp (renauxconj t l) (renAuxConj t' l)
 renAuxConj (Equi t t') l = Equi (renAuxConj t l) (renAuxConj t' l)
-renAuxConj (All n f) l = if(not (elem (n++"'") l ) ) 
-                        then (All (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
-                        else renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
-renauxconj (Ex n f) l = if(not (elem (n++"'") l ) ) 
-                        then (Ex (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
-                        else renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
+renAuxConj (All n f) l
+  | not (elem (n++"'") l ) = (All (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+  | otherwise = renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
+renauxconj (Ex n f) l
+  | not (elem (n++"'") l ) = (Ex (n++"'") (renom(sustForm f [(n,V (n++"'"))])))
+  | otherwise = renAuxConj (All (n++"'") (renom(sustForm f [(n,V (n++"'"))]))) l
 
 -- 3. Función que aplica la sustitución a una fórmula alpha-equivalente.
 sustFormAlpha :: Form -> Subst -> Form
