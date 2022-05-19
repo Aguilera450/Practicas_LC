@@ -95,3 +95,15 @@ eliminar([C|Cl],[C|E]) :- eliminar(Cl,E).
     % Alexia odia el clima lluvioso.
     odiar(alexia, clima_lluvioso).
     
+/*
+* Ejercicio 6
+* la logica esta anexado en un pdf
+*/
+
+esta_relacionado(autor,niño).
+esta_relacionado(padre,niña).
+esta_relacionado(autor,padre).
+esta_relacionado(padre,autor).
+esta_relacionado(autor,hija).
+
+abuelo(X,Z) :- esta_relacionado(X,Y), esta_relacionado(Y,Z).
