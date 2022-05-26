@@ -80,30 +80,27 @@ binario_char([X|XS],[Y|YS]) :- binario(X,Y), binario_char(XS,YS).
 binario_char([X|XS],[Y|YS]) :- binario(Y,X), binario_char(XS,YS).
 
 %---------------- Ejercicio 02
-%%%%% Hechos
-% sobre, e.g. (rojo, azul) => rojo esta sobre azul.
-sobre(rojo, azul).
-sobre(gris, rojo).
-sobre(amarillo, rosa).
-
-% hastaArriba, e.g. el cubo de color gris es el último en la pila de cubos.
-hastaArriba(gris).
-hastaArriba(amarillo).
-
-% bloqueado, e.g. el cubo de color azul tiene más cubos arriba y por tanto no se puede mover.
-bloqueado(azul).
+:- dynamic(sobre/2).
+:- dynamic(bloqueado/1).
+% sobre(X,Y) - X está sobre Y
+sobre(gris,rojo).
+sobre(rojo,azul).
+sobre(amarillo,rosa).
+% hastaArriba(X) - X es el cubo más arriba en su pila de cubos.
+hastaArriba(X) :- not(bloqueado(X)).
+%  bloqueado(X) - X tiene un cubo encima
 bloqueado(rojo).
+bloqueado(azul).
 bloqueado(rosa).
+% hastaAbajo(X) - X es el cubo que se encuentre hasta el fondo de su pila de cubos.
+hastaAbajo(X) :- not(sobre(X,_)).
+% mover(X,Y) - nos permite mover X sobre Y si este último esta encima.
+mover(X,Y) :- sobre(Y,X), !, assert(bloqueado(Y)),retract(sobre(Y,X)),revisa(X,Y), intercambia(X,Y).
+% revisa(X,Y) - relación auxiliar que revisa si al mover el cubo este se debe bloquear o no
+revisa(X,Y) :- sobre(Z,Y), !, assert(sobre(Z,X)), assert(bloqueado(X)); retract(bloqueado(X)).
+% intercambia(X,Y) - relación auxiliar que intercambia el cubo debajo del original si es debido
+intercambia(X,Y) :- sobre(X,Z), !, assert(sobre(Y,Z)), retract(sobre(X,Z)), assert(sobre(X,Y)); assert(sobre(X,Y)).
 
-% Sabemos que cubos se encuentran al fondo de la torre de cubos:
-fondo(azul).
-fondo(rosa).
-fondo(verde).
-
-% inciso (a):
-hastaAbajo(X) :- fondo(X).
-%hastaAbajo(X) :- sobre(X, Y), hastaAbajo(Y).
-    
 %---------------- Ejercicio 03
 % Estados finales:
 estado_final(q1).
