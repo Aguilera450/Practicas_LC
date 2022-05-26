@@ -80,7 +80,30 @@ binario_char([X|XS],[Y|YS]) :- binario(X,Y), binario_char(XS,YS).
 binario_char([X|XS],[Y|YS]) :- binario(Y,X), binario_char(XS,YS).
 
 %---------------- Ejercicio 02
+%%%%% Hechos
+% sobre, e.g. (rojo, azul) => rojo esta sobre azul.
+sobre(rojo, azul).
+sobre(gris, rojo).
+sobre(amarillo, rosa).
 
+% hastaArriba, e.g. el cubo de color gris es el último en la pila de cubos.
+hastaArriba(gris).
+hastaArriba(amarillo).
+
+% bloqueado, e.g. el cubo de color azul tiene más cubos arriba y por tanto no se puede mover.
+bloqueado(azul).
+bloqueado(rojo).
+bloqueado(rosa).
+
+% Sabemos que cubos se encuentran al fondo de la torre de cubos:
+fondo(azul).
+fondo(rosa).
+fondo(verde).
+
+% inciso (a):
+hastaAbajo(X) :- fondo(X).
+%hastaAbajo(X) :- sobre(X, Y), hastaAbajo(Y).
+    
 %---------------- Ejercicio 03
 % Estados finales:
 estado_final(q1).
