@@ -78,3 +78,29 @@ binario_char([X],[Y]) :- binario(X,Y).
 binario_char([X],[Y]) :- binario(Y,X).
 binario_char([X|XS],[Y|YS]) :- binario(X,Y), binario_char(XS,YS).
 binario_char([X|XS],[Y|YS]) :- binario(Y,X), binario_char(XS,YS).
+
+%---------------- Ejercicio 02
+
+%---------------- Ejercicio 03
+% Estados finales:
+estado_final(q1).
+estado_final(q2).
+
+% Estado inicial:
+estado_inicial(q0).
+
+% Trancisiones:
+transicion(q0, b, q2).
+transicion(q0, b, q1).
+transicion(q0, b, q3).
+transicion(q1, a, q1).
+transicion(q1, b, q1).
+transicion(q2, a, q1).
+transicion(q3, b, q0).
+
+% Funcion auxiliar a "aceptar":
+termina(X, []) :- estado_final(X).
+termina(X, [Y|L]) :- transicion(X, Y, E), termina(E, L).
+
+% Función que acepta las cadenas (listas) syss el autómata las procesa:
+aceptar([S|L]) :- termina(q0, [S|L]).
