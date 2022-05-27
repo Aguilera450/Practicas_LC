@@ -33,7 +33,6 @@ char(z,01111010).
 % Tenemos el caso base por si nos pasan una lista vacia, 
 %  devolvemos una lista vacia 
 char_binario([],[]) :- char(_,_).
-char_binario([],[]) :- char(_,_).
 % Sige el caso donde solo hay un elemento en la lista
 char_binario([X],[Y]) :- char(X,Y).
 char_binario([X],[Y]) :- char(Y,X).
@@ -72,7 +71,6 @@ binario(01111000,x).
 binario(01111001,y).
 binario(01111010,z).
 
-binario_char([],[]) :- binario(_,_).
 binario_char([],[]) :- binario(_,_).
 binario_char([X],[Y]) :- binario(X,Y).
 binario_char([X],[Y]) :- binario(Y,X).
