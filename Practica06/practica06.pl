@@ -123,7 +123,9 @@ termina(X, [Y|L]) :- transicion(X, Y, E), termina(E, L).
 % Función que acepta las cadenas (listas) syss el autómata las procesa:
 aceptar([S|L]) :- termina(q0, [S|L]).
 
-% --Ejercicio 4
+% ------- Ejercicio 4
+% Caso Prueba:
+%             mezclar([1,2,3],[4,5,6],L).
 
 ordseleccion([],[]).
 ordseleccion(L1,[X|L2]) :- menor(X,L1,L3), ordseleccion(L3,L2).
@@ -141,9 +143,9 @@ mezclar([],[],[]).
 mezclar(L,[],L). 
 mezclar([],L, L).
 
-mezclar([A|As], [B|Bs], [A|Cs]):- A<B,!, mezclar(As, [B|Bs], Cs), ordenada([A|Cs]).  
-mezclar([A|As], [B|Bs], [A,B|Cs]):- A=B,!,mezclar(As, Bs, Cs), ordenada([A,B|Cs]). 
-mezclar([A|As], [B|Bs], [B|Cs]):- A>B,!, mezclar([A|As], Bs, Cs), ordenada([B|Cs]). 
+mezclar([X|Xs], [Y|Ys], [X|Zs]):- X<Y,!, mezclar(Xs, [Y|Ys], Zs), ordenada([X|Zs]).  
+mezclar([X|Xs], [Y|Ys], [X,Y|Cs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
+mezclar([X|Xs], [Y|Ys], [Y|Zs]):- X>Y,!, mezclar([X|Xs], Ys, Zs), ordenada([Y|Zs]). 
 
 ordenada([]).
 ordenada([_]).
