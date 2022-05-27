@@ -122,3 +122,29 @@ termina(X, [Y|L]) :- transicion(X, Y, E), termina(E, L).
 
 % Función que acepta las cadenas (listas) syss el autómata las procesa:
 aceptar([S|L]) :- termina(q0, [S|L]).
+
+% --Ejercicio 4
+
+ordseleccion([],[]).
+ordseleccion(L1,[X|L2]) :- menor(X,L1,L3), ordseleccion(L3,L2).
+menor(X,L1,L2) :- select(X,L1,L2), not((member(Y,L2), Y =< X)).
+
+
+% Si mezclamos dos listas vacias, el resultado es la lista vacia
+
+mezclar([],[],[]).  
+
+% Si recibimos una lista vacia y hacemos mezcla con una lista que si contiene elementos
+%  el resultado será unicamente la lista con sus mismos elementos y como ya estan ordenados
+%  es satisfactorio el resultado
+
+mezclar(L,[],L). 
+mezclar([],L, L).
+
+mezclar([A|As], [B|Bs], [A|Cs]):- A<B,!, mezclar(As, [B|Bs], Cs), ordenada([A|Cs]).  
+mezclar([A|As], [B|Bs], [A,B|Cs]):- A=B,!,mezclar(As, Bs, Cs), ordenada([A,B|Cs]). 
+mezclar([A|As], [B|Bs], [B|Cs]):- A>B,!, mezclar([A|As], Bs, Cs), ordenada([B|Cs]). 
+
+ordenada([]).
+ordenada([_]).
+ordenada([X,Y|Ys]) :- X<Y, ordenada([Y|Ys]).
