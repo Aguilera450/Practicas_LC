@@ -1,6 +1,13 @@
-%practica06
+/* 
+        Practica 06
+Equipo: InvadirPolonia.
+ Integrantes:
+   *) Marco Silva Huerta: 316205326.
+   *) Adrián Aguilera Moreno: 421005200.
+*/
 
-%Ejercicio 1 lo dividimos en dos partes
+%---------------- Ejercicio 01
+% Lo dividimos en dos partes:
 % Parte a) Convertimos de caracteres a binario
 
 char(a,01100001).
@@ -30,8 +37,8 @@ char(x,01111000).
 char(y,01111001).
 char(z,01111010).
 
-% Tenemos el caso base por si nos pasan una lista vacia, 
-%  devolvemos una lista vacia 
+/* Tenemos el caso base por si nos pasan una lista vacia, 
+  devolvemos una lista vacia */
 char_binario([],[]) :- char(_,_).
 % Sige el caso donde solo hay un elemento en la lista
 char_binario([X],[Y]) :- char(X,Y).
@@ -40,10 +47,7 @@ char_binario([X],[Y]) :- char(Y,X).
 char_binario([X|XS],[Y|YS]) :- char(X,Y), char_binario(XS,YS).
 char_binario([X|XS],[Y|YS]) :- char(Y,X), char_binario(XS,YS).
 
-%
-% 
 % Parte b) Convertimos de binario a caracteres
-
 binario(01100001,a).
 binario(01100010,b).
 binario(01100011,c).
@@ -80,22 +84,29 @@ binario_char([X|XS],[Y|YS]) :- binario(Y,X), binario_char(XS,YS).
 %---------------- Ejercicio 02
 :- dynamic(sobre/2).
 :- dynamic(bloqueado/1).
-% sobre(X,Y) - X está sobre Y
-sobre(gris,rojo).
+% Función sobre:
 sobre(rojo,azul).
+sobre(gris,rojo).
 sobre(amarillo,rosa).
-% hastaArriba(X) - X es el cubo más arriba en su pila de cubos.
+
+% Función hastaArriba:
 hastaArriba(X) :- not(bloqueado(X)).
-%  bloqueado(X) - X tiene un cubo encima
+
+% Función bloqueado:
 bloqueado(rojo).
 bloqueado(azul).
 bloqueado(rosa).
-% hastaAbajo(X) - X es el cubo que se encuentre hasta el fondo de su pila de cubos.
+
+% Función hastaAbajo:
 hastaAbajo(X) :- not(sobre(X,_)).
-% mover(X,Y) - nos permite mover X sobre Y si este último esta encima.
+
+% Función mover:
 mover(X,Y) :- sobre(Y,X), !, assert(bloqueado(Y)),retract(sobre(Y,X)),revisa(X,Y), intercambia(X,Y).
+
+% Funciones auxiliares de mover:
 % revisa(X,Y) - relación auxiliar que revisa si al mover el cubo este se debe bloquear o no
 revisa(X,Y) :- sobre(Z,Y), !, assert(sobre(Z,X)), assert(bloqueado(X)); retract(bloqueado(X)).
+
 % intercambia(X,Y) - relación auxiliar que intercambia el cubo debajo del original si es debido
 intercambia(X,Y) :- sobre(X,Z), !, assert(sobre(Y,Z)), retract(sobre(X,Z)), assert(sobre(X,Y)); assert(sobre(X,Y)).
 
@@ -123,7 +134,7 @@ termina(X, [Y|L]) :- transicion(X, Y, E), termina(E, L).
 % Función que acepta las cadenas (listas) syss el autómata las procesa:
 aceptar([S|L]) :- termina(q0, [S|L]).
 
-% ------- Ejercicio 4
+%---------------- Ejercicio 04
 % Caso Prueba:
 %             mezclar([1,2,3],[4,5,6],L).
 
@@ -144,7 +155,8 @@ mezclar(L,[],L).
 mezclar([],L, L).
 
 mezclar([X|Xs], [Y|Ys], [X|Zs]):- X<Y,!, mezclar(Xs, [Y|Ys], Zs), ordenada([X|Zs]).  
-mezclar([X|Xs], [Y|Ys], [X,Y|Cs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
+%:-style_check(-singleton).
+mezclar([X|Xs], [Y|Ys], [X,Y|Zs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
 mezclar([X|Xs], [Y|Ys], [Y|Zs]):- X>Y,!, mezclar([X|Xs], Ys, Zs), ordenada([Y|Zs]). 
 
 ordenada([]).
