@@ -147,9 +147,9 @@ menor(X,L1,L2) :- select(X,L1,L2), not((member(Y,L2), Y =< X)).
 
 mezclar([],[],[]).  
 
-% Si recibimos una lista vacia y hacemos mezcla con una lista que si contiene elementos
-%  el resultado será unicamente la lista con sus mismos elementos y como ya estan ordenados
-%  es satisfactorio el resultado
+/* Si recibimos una lista vacia y hacemos mezcla con una lista que si contiene elementos
+   el resultado será unicamente la lista con sus mismos elementos y como ya estan ordenados
+   es satisfactorio el resultado*/
 
 mezclar(L,[],L). 
 mezclar([],L, L).
