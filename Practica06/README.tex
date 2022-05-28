@@ -1,0 +1,130 @@
+\documentclass{article}
+
+% Symbols
+\usepackage{amsfonts, amsthm}
+\usepackage{upgreek}
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amssymb, latexsym, amsmath}
+
+%Algorithms
+\usepackage[ruled,lined,linesnumbered,commentsnumbered]{algorithm2e}
+
+%% Identación
+\setlength{\parindent}{0cm}
+
+% Código
+\newcommand{\code}[1]{\textcolor{white!25!black}{\texttt{#1}}}
+\usepackage{listings}
+
+%AMS
+\usepackage{amsthm}
+\newtheorem{algo-thm}{Algoritmo}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage{pgf}
+
+% Margins
+\addtolength{\voffset}{-1.5cm}
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\textheight}{3cm}
+
+%Header-Footer
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{1pt}
+
+\newcommand{\set}[1]{
+  \left\{ #1 \right\}
+}
+
+\footskip = 50pt
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancyplain}
+
+\begin{document}
+\title{UNIVERSIDAD NACIONAL AUT\'ONOMA DE M\'EXICO\\ Facultad de Ciencias}
+\author{Integrantes:\\
+  Marco Silva Huerta\\
+  Adri\'an Aguilera Moreno\\}
+\date{}
+\maketitle
+\begin{center}
+  \includegraphics[scale=0.20]{../Imagen/Portada.jpg}\\[0.4cm]
+  \Large
+  \bf{Lógica Computacional}
+  \normalsize
+\end{center}
+\newpage
+\fancyhead[r]{ Lógica Computacional 2022-2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{\LARGE{Práctica 6}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% ESPECIFICACIONES AQUÍ %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\localtextbulletone}{\textcolor{black}{\raisebox{.45ex}{\rule{.6ex}{.6ex}}}}
+\renewcommand{\labelitemi}{\localtextbulletone}
+\begin{itemize}
+\item \textbf{Convertidor:}\\
+  Todos los casos deberán ser listas, no se acepta hacer una conversión de un símbolo en solitario es decir \textit{char\_binario(a,L).} devuelve false.\\
+  Comenzamos entonces por el caso base, si nos pasan una lista vacía para convertirla devolvemos la misma lista vacía.\\
+  El segundo paso es ir caso a caso, de modo que toma el único char y lo convierte haciendo recursión sobre los hechos. Para la parte final recorremos toda la lista que nos estén pasando haciendo la recursión en el caso unitario y una vez echa la conversión se agrean a la lista convertida. \\
+  Esto es lo mismo para cuando queremos ir de char a binario y de binario a char. 
+  
+\item \textbf{Cubos:}\\
+  \code{sobre} nos indica que cubo esta sobre algún otro, \textit{i.e.}, \code{sobre(X, Y)} indica que \code{X}
+  esta sobre \code{Y}.
+
+  \code{hastaArriba} nos indica quién ya no tiene un cubo sobre de el mismo.
+
+  \code{bloqueado} nos dice si el cubo que se pasa como parámetro tiene un cubo arriba de el o no.
+
+  \code{hastaAbajo} nos indica quién es el cubo que esta abajo en la pila de cubos.
+
+  Las funciones auxiliares se especifican como comentario en el programa lógico.
+\item \textbf{Autómatas:}\\
+  \code{estado\_final} es el estado de aceptación de la lista que se le pasa al autómata si es que esa lista
+  es aceptada por el lenguaje que genera el autómata.
+
+  \code{estado\_inicial} este estado es el primero por el que pasa la lista recibida y por donde inicia siempre
+  (pues solo hay un estado inicial).
+
+  \code{transicion} es nuestra función de transición donde están definidos todos los cambios de estados.
+
+  \code{termina} esta función nos indica si la lista que se pasa como parámetro es aceptada por el autómata o no,
+  después de sus respectivas llamadas recursivas.
+
+  \code{aceptar} es la función que recibe una sola cadena y que por omisión llama a \code{termina} con estado
+  inicial $q_0$.
+\item \textbf{Mezcla:}\\
+  El primer método es un ordenamiento por selección, haciendo uso de las funciones \textit{select} y \textit{member} en el método auxiliar \textit{menor} que se encarga de hacer las todas las comparaciones.\\
+  
+  Para el método mezcla hay 2 casos base:
+  \begin{itemize}
+  \item Donde nos pasan dos listas vacías, devolvemos la lista vacía
+  \item Donde mezclamos una lista vacía y una lista con elementos (ordenados) darán únicamente la lista ordenada. 
+  \end{itemize}
+  
+  Teniendo esto pasamos a realizar la mezcla tomando en cuenta 3 situaciones:
+  \begin{equation*}
+    X>Y, \hspace{5mm} X=Y, \hspace{5mm} X<Y
+  \end{equation*}
+  
+  Estas son la situaciones que se nos presentan al comparar las dos listas de modo que el operador de corte (\textbf{!}) se aplica después de hacer dicha comparación. Es decir que si se cumple que $X>Y$ el operador corta las ramas siguientes, caso contrario sigue. \\
+  Para poder mezclar, únicamente podemos hacerlo con las dos listas ordenadas así que se creó un método auxiliar \textit{ordenada} que devuelve true o false si es que la lista que le pasan esta ordenada. Aplicándolo al método \textit{mezclar} verifica si estas listas están ordenadas. 
+\end{itemize}
+\begin{center}
+  \fbox{
+    \begin{minipage}[b][1\height]%
+      [t]{0.867\textwidth}
+      Matriculas:
+      \begin{itemize}
+      \item[1.] Marco Silva Huerta: 316205326.
+      \item[2.] Adrian Aguilera Moreno: 421005200.
+      \end{itemize}
+  \end{minipage}}
+\end{center}
+
+\end{document}
