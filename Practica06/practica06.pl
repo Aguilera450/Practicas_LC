@@ -33,7 +33,6 @@ char(z,01111010).
 % Tenemos el caso base por si nos pasan una lista vacia, 
 %  devolvemos una lista vacia 
 char_binario([],[]) :- char(_,_).
-char_binario([],[]) :- char(_,_).
 % Sige el caso donde solo hay un elemento en la lista
 char_binario([X],[Y]) :- char(X,Y).
 char_binario([X],[Y]) :- char(Y,X).
@@ -72,7 +71,6 @@ binario(01111000,x).
 binario(01111001,y).
 binario(01111010,z).
 
-binario_char([],[]) :- binario(_,_).
 binario_char([],[]) :- binario(_,_).
 binario_char([X],[Y]) :- binario(X,Y).
 binario_char([X],[Y]) :- binario(Y,X).
@@ -124,3 +122,31 @@ termina(X, [Y|L]) :- transicion(X, Y, E), termina(E, L).
 
 % Función que acepta las cadenas (listas) syss el autómata las procesa:
 aceptar([S|L]) :- termina(q0, [S|L]).
+
+% ------- Ejercicio 4
+% Caso Prueba:
+%             mezclar([1,2,3],[4,5,6],L).
+
+ordseleccion([],[]).
+ordseleccion(L1,[X|L2]) :- menor(X,L1,L3), ordseleccion(L3,L2).
+menor(X,L1,L2) :- select(X,L1,L2), not((member(Y,L2), Y =< X)).
+
+
+% Si mezclamos dos listas vacias, el resultado es la lista vacia
+
+mezclar([],[],[]).  
+
+% Si recibimos una lista vacia y hacemos mezcla con una lista que si contiene elementos
+%  el resultado será unicamente la lista con sus mismos elementos y como ya estan ordenados
+%  es satisfactorio el resultado
+
+mezclar(L,[],L). 
+mezclar([],L, L).
+
+mezclar([X|Xs], [Y|Ys], [X|Zs]):- X<Y,!, mezclar(Xs, [Y|Ys], Zs), ordenada([X|Zs]).  
+mezclar([X|Xs], [Y|Ys], [X,Y|Cs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
+mezclar([X|Xs], [Y|Ys], [Y|Zs]):- X>Y,!, mezclar([X|Xs], Ys, Zs), ordenada([Y|Zs]). 
+
+ordenada([]).
+ordenada([_]).
+ordenada([X,Y|Ys]) :- X<Y, ordenada([Y|Ys]).
