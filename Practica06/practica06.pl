@@ -144,7 +144,7 @@ mezclar(L,[],L).
 mezclar([],L, L).
 
 mezclar([X|Xs], [Y|Ys], [X|Zs]):- X<Y,!, mezclar(Xs, [Y|Ys], Zs), ordenada([X|Zs]).  
-mezclar([X|Xs], [Y|Ys], [X,Y|Cs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
+mezclar([X|Xs], [Y|Ys], [X,Y|Zs]):- X=Y,!,mezclar(Xs, Ys, Zs), ordenada([X,Y|Zs]). 
 mezclar([X|Xs], [Y|Ys], [Y|Zs]):- X>Y,!, mezclar([X|Xs], Ys, Zs), ordenada([Y|Zs]). 
 
 ordenada([]).
