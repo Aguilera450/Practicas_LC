@@ -65,4 +65,26 @@ Section Practica07.
   Qed.
   
   (******************************************** 3 ********************************************)
+ 
+ (******************************************** 5 ********************************************)
   
+Theorem cinco: forall p q r s t u: Prop,(p->q->r)/\ (p\/s)/\(t->q)/\(~s)->~r->~t.
+Proof.
+  intros.
+  destruct H.
+  destruct H1.
+  destruct H2.
+  intro.
+  apply H2 in H4.
+  apply H in H4.
+  contradiction.
+  destruct(classic p).
+  apply H in H4.
+  contradiction.
+  apply H5.
+  destruct H1.
+  contradiction.
+  contradiction.
+Qed.
+
+ (******************************************** 5 ********************************************)
